@@ -1,4 +1,4 @@
-package com.avanade.decolatech.fintech.models;
+package com.avanade.decolatech.fintech.models.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;

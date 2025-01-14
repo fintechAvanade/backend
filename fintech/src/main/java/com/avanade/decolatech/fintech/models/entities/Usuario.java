@@ -1,20 +1,10 @@
-package com.avanade.decolatech.fintech.models;
+package com.avanade.decolatech.fintech.models.entities;
 
 import java.util.Date;
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import com.avanade.decolatech.fintech.models.enums.TipoUsuario;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "TB_USUARIO")
@@ -51,9 +41,10 @@ public class Usuario {
 	@Column(name = "DATA_ULTIMO_ACESSO")
 	@Temporal(value = TemporalType.TIMESTAMP)
 	private Date dataUltimoAcesso;
-	
+
 	@Column(name = "TIPO_USUARIO")
-	private char tipoUsuario;
+	@Enumerated(EnumType.STRING)
+	private TipoUsuario tipoUsuario;
 	
 	@Column(name = "NUMERO_TENTATIVAS_ACESSO")
 	private int numerosTentativasAcesso;
@@ -65,7 +56,7 @@ public class Usuario {
 	@JoinColumn(name = "ID_ENDERECO")
 	private Endereco endereco;
 
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "usuario")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "usuario")
 	private List<Conta> conta;
 
 	public int getId() {
@@ -140,11 +131,11 @@ public class Usuario {
 		this.dataUltimoAcesso = dataUltimoAcesso;
 	}
 
-	public char getTipoUsuario() {
+	public TipoUsuario getTipoUsuario() {
 		return tipoUsuario;
 	}
 
-	public void setTipoUsuario(char tipoUsuario) {
+	public void setTipoUsuario(TipoUsuario tipoUsuario) {
 		this.tipoUsuario = tipoUsuario;
 	}
 

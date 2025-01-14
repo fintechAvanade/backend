@@ -1,14 +1,9 @@
-package com.avanade.decolatech.fintech.models;
+package com.avanade.decolatech.fintech.models.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "TB_CONTA")
@@ -40,6 +35,10 @@ public class Conta {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ID_USUARIO")
 	private Usuario usuario;
+
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "conta")
+	private List<Movimentacao> movimentacoes;
 
 	public int getId() {
 		return id;
@@ -104,6 +103,13 @@ public class Conta {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	
+
+	public List<Movimentacao> getMovimentacoes() {
+		return movimentacoes;
+	}
+
+	public void setMovimentacoes(List<Movimentacao> movimentacoes) {
+		this.movimentacoes = movimentacoes;
+	}
 	
 }
