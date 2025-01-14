@@ -4,7 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "TB_CHAVE_PIX")
-public class ChavePix {
+@Table(name = "TB_ENDERECO")
+public class Endereco {
 
 }
