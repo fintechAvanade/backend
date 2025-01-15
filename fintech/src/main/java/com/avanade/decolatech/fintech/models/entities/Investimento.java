@@ -39,4 +39,52 @@ public class Investimento {
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "investimento")
 	private List<ContaInvestimento> contasInvestimentos;
+	
+	public int getId() {
+		return id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public String getNomeInvestimento() {
+		return nomeInvestimento;
+	}
+	
+	public void setNomeInvestimento(String nomeInvestimento) {
+		this.nomeInvestimento = nomeInvestimento;
+	}
+	
+	public double getRendimentoDiario() {
+		return rendimentoDiario;
+	}
+	
+	public void setRendimentoDiario(double rendimentoDiario) {
+		this.rendimentoDiario = rendimentoDiario;
+	}
+	
+	public boolean isResgateAntecipado() {
+		return resgateAntecipado;
+	}
+	
+	public void setResgateAntecipado(boolean resgateAntecipado) {
+		this.resgateAntecipado = resgateAntecipado;
+	}
+	
+	public Date getPrevisaoResgate() {
+		return previsaoResgate;
+	}
+	
+	public void setPrevisaoResgate(Date previsaoResgate) {
+		this.previsaoResgate = previsaoResgate;
+	}
+	
+	public List<ContaInvestimento> getContasInvestimentos() {
+		return contasInvestimentos;
+	}
+	
+	public void setContasInvestimentos(List<ContaInvestimento> contasInvestimentos) {
+		this.contasInvestimentos = contasInvestimentos;
+	}
 }

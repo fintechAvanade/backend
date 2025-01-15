@@ -29,4 +29,36 @@ public class ContaInvestimento {
 	
 	@Column(name = "VALOR_APLICADO")
 	private double valorAplicado;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public Conta getConta() {
+		return conta;
+	}
+
+	public void setConta(Conta conta) {
+		this.conta = conta;
+	}
+
+	public Investimento getInvestimento() {
+		return investimento;
+	}
+
+	public void setInvestimento(Investimento investimento) {
+		this.investimento = investimento;
+	}
+
+	public double getValorAplicado() {
+		return valorAplicado;
+	}
+
+	public void setValorAplicado(double valorAplicado) {
+		this.valorAplicado = valorAplicado;
+	}
 }
