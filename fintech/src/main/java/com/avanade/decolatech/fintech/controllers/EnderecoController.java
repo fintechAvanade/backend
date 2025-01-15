@@ -1,7 +1,6 @@
 package com.avanade.decolatech.fintech.controllers;
 
 import com.avanade.decolatech.fintech.models.entities.Endereco;
-import com.avanade.decolatech.fintech.models.entities.Usuario;
 import com.avanade.decolatech.fintech.models.services.EnderecoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/endereco")
+@RequestMapping("/enderecos")
 public class EnderecoController {
     @Autowired
     private EnderecoService enderecoService;
