@@ -52,7 +52,7 @@ public class Usuario {
 	@Column(name = "ATIVO")
 	private boolean ativo;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ID_ENDERECO")
 	private Endereco endereco;
 

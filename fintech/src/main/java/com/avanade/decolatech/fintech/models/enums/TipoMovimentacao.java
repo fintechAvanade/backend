@@ -4,4 +4,5 @@ public enum TipoMovimentacao {
     TRANSFERENCIA,
     PIX,
     PAGAMENTO_BOLETO,
+    DEPOSITO
 }
