@@ -21,7 +21,6 @@ public class Usuario {
 	@Column(name = "CPF")
 	private String cpf;
 	
-	
 	@Column(name = "DATA_NASCIMENTO")
 	@Temporal(value = TemporalType.TIMESTAMP)
 	private Date dataNascimento;
