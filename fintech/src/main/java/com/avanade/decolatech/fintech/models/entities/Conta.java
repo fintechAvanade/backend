@@ -39,6 +39,10 @@ public class Conta {
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "conta")
 	private List<Movimentacao> movimentacoes;
+	
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "conta")
+	private List<ContaInvestimento> contasInvestimentos;
 
 	public int getId() {
 		return id;
