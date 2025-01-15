@@ -39,13 +39,4 @@ public class EnderecoController {
         }
     }
 
-    @DeleteMapping("/apagar")
-    public ResponseEntity<?> apagar(@RequestBody Endereco endereco){
-        try{
-            enderecoService.apagarEndereco(endereco);
-            return new ResponseEntity<String>("Endereço apagado com sucesso", HttpStatus.OK);
-        }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
-    }
 }

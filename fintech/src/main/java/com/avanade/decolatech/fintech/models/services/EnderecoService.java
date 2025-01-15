@@ -22,8 +22,4 @@ public class EnderecoService {
         return enderecoRepository.save(endereco);
     }
 
-    public void apagarEndereco(Endereco endereco){
-        enderecoRepository.delete(endereco);
-    }
-
 }
