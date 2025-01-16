@@ -15,8 +15,8 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
-    @GetMapping("/listar")
-    public ResponseEntity<List<Usuario>> listar(){
+    @GetMapping("/lista")
+    public ResponseEntity<List<Usuario>> lista(){
 
         return new ResponseEntity<List<Usuario>>(usuarioService.listarUsuarios(), HttpStatus.OK);
     }

@@ -25,8 +25,8 @@ public class InvestimentoController {
     private InvestimentoService investimentoService;
 	
 
-    @GetMapping("/listar")
-    public ResponseEntity<List<Investimento>> listar(){
+    @GetMapping("/lista")
+    public ResponseEntity<List<Investimento>> lista(){
         return new ResponseEntity<List<Investimento>>(investimentoService.listarInvestimentos(), HttpStatus.OK);
     }
 

@@ -17,8 +17,8 @@ public class MovimentacaoController {
     @Autowired
     private MovimentacaoServices movimentacaoServices;
 
-    @GetMapping("listar")
-    public ResponseEntity<List<Movimentacao>> listar(){
+    @GetMapping("lista")
+    public ResponseEntity<List<Movimentacao>> lista(){
         return new ResponseEntity<List<Movimentacao>>(movimentacaoServices.listarMovimentacoes(), HttpStatus.OK);
 
     }

@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.avanade.decolatech.fintech.models.entities.Investimento;
 import com.avanade.decolatech.fintech.models.repositories.InvestimentoRepository;
+import org.springframework.stereotype.Service;
 
+@Service
 public class InvestimentoService {
 	
 	@Autowired

@@ -15,8 +15,8 @@ public class EnderecoController {
     @Autowired
     private EnderecoService enderecoService;
 
-    @GetMapping("/listar")
-    public ResponseEntity<List<Endereco>> listar(){
+    @GetMapping("/lista")
+    public ResponseEntity<List<Endereco>> lista(){
         return new ResponseEntity<List<Endereco>>(enderecoService.listarEnderecos(), HttpStatus.OK);
     }
 

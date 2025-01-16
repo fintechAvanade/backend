@@ -16,8 +16,8 @@ public class CartaoController {
     @Autowired
     private ContaService contaService;
 
-    @GetMapping("/listar")
-    public ResponseEntity<List<Conta>> listar(){
+    @GetMapping("/lista")
+    public ResponseEntity<List<Conta>> lista(){
         return new ResponseEntity<List<Conta>>(contaService.listarContas(), HttpStatus.OK);
     }
 
