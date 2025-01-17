@@ -1,13 +1,19 @@
 package com.avanade.decolatech.fintech.controllers;
 
-import com.avanade.decolatech.fintech.models.entities.Conta;
-import com.avanade.decolatech.fintech.models.services.ContaService;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import com.avanade.decolatech.fintech.models.dto.response.AdminContasClienteDTO;
+import com.avanade.decolatech.fintech.models.entities.Conta;
+import com.avanade.decolatech.fintech.models.services.ContaService;
 
 @RestController
 @RequestMapping("/contas")
@@ -16,7 +22,7 @@ public class ContaController {
     private ContaService contaService;
 
     @GetMapping("/lista")
-    public ResponseEntity<List<Conta>> lista(){
+    public ResponseEntity<List<Conta>> listar(){
         return new ResponseEntity<List<Conta>>(contaService.listarContas(), HttpStatus.OK);
     }
 
@@ -28,4 +34,18 @@ public class ContaController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
+    
+    @GetMapping("/clientes")
+    public ResponseEntity<List<AdminContasClienteDTO>> listarClientes(){
+    	return new ResponseEntity<List<AdminContasClienteDTO>>(contaService.listarContasGerenciamento(), HttpStatus.OK);
+    }
 }
+
+
+
+
+
+
+
+
+
