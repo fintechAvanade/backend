@@ -1,5 +1,6 @@
 package com.avanade.decolatech.fintech.models.services;
 
+import com.avanade.decolatech.fintech.models.dtos.responses.UsuarioResponseDto;
 import com.avanade.decolatech.fintech.models.entities.Usuario;
 import com.avanade.decolatech.fintech.models.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,10 @@ public class UsuarioService {
 
     public List<Usuario> listarUsuarios(){
         return usuarioRepository.findAll();
+    }
+
+    public UsuarioResponseDto obterUsuarioPorId(int idUsuario) {
+        return usuarioRepository.listarUsuarioPeloId(idUsuario);
     }
 
     public Usuario incluirUsuario(Usuario usuario){

@@ -1,5 +1,6 @@
 package com.avanade.decolatech.fintech.controllers;
 
+import com.avanade.decolatech.fintech.models.dtos.responses.MovimentacoesResponseDto;
 import com.avanade.decolatech.fintech.models.entities.Movimentacao;
 import com.avanade.decolatech.fintech.models.services.MovimentacaoServices;
 import org.apache.coyote.Response;
@@ -22,6 +23,12 @@ public class MovimentacaoController {
         return new ResponseEntity<List<Movimentacao>>(movimentacaoServices.listarMovimentacoes(), HttpStatus.OK);
 
     }
+
+    @GetMapping("/{idConta}")
+    public ResponseEntity<List<MovimentacoesResponseDto>> listaByIdConta(@PathVariable("idConta") int idConta){
+        return new ResponseEntity<List<MovimentacoesResponseDto>>(movimentacaoServices.listarMovimentacoesPeloIdConta(idConta), HttpStatus.OK);
+    }
+
     @PostMapping("/novo")
     public ResponseEntity<?> incluir(@RequestBody Movimentacao movimentacao){
         try {

@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.avanade.decolatech.fintech.models.enums.TipoUsuario;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -57,10 +58,10 @@ public class Usuario {
 	@Column(name = "ATIVO")
 	private boolean ativo;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_ENDERECO")
 	private Endereco endereco;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "usuario")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "usuario")
 	private List<Conta> conta;
 }

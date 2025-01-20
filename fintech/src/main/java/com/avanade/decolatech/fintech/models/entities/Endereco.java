@@ -35,7 +35,7 @@ public class Endereco {
 	private String estado;
 	
 	@Column(name = "NUMERO")
-	private String numero;
+	private int numero;
 	
 	@Column(name = "COMPLEMENTO")
 	private String complemento;

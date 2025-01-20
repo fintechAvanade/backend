@@ -1,5 +1,6 @@
 package com.avanade.decolatech.fintech.controllers;
 
+import com.avanade.decolatech.fintech.models.dtos.responses.UsuarioResponseDto;
 import com.avanade.decolatech.fintech.models.entities.Usuario;
 import com.avanade.decolatech.fintech.models.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +16,13 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
+    @GetMapping("/{idUsuario}")
+    public ResponseEntity<UsuarioResponseDto> obterUsuarioPorId(@PathVariable("idUsuario") int idUsuario){
+        return new ResponseEntity<UsuarioResponseDto>(usuarioService.obterUsuarioPorId(idUsuario), HttpStatus.OK);
+    }
+
     @GetMapping("/lista")
     public ResponseEntity<List<Usuario>> lista(){
-
         return new ResponseEntity<List<Usuario>>(usuarioService.listarUsuarios(), HttpStatus.OK);
     }
 

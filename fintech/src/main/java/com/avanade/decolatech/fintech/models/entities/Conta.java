@@ -1,5 +1,6 @@
 package com.avanade.decolatech.fintech.models.entities;
 
+import com.avanade.decolatech.fintech.models.enums.TipoConta;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -36,7 +37,8 @@ public class Conta {
 	private boolean ativo;
 	
 	@Column(name = "TIPO_CONTA")
-	private char tipoConta;
+	@Enumerated(EnumType.STRING)
+	private TipoConta tipoConta;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ID_USUARIO")

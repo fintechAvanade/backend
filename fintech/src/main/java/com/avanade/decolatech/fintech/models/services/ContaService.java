@@ -2,12 +2,13 @@ package com.avanade.decolatech.fintech.models.services;
 
 import java.util.List;
 
+import com.avanade.decolatech.fintech.models.dtos.responses.ValorResponseDto;
+import com.avanade.decolatech.fintech.models.entities.Conta;
+import com.avanade.decolatech.fintech.models.repositories.ContaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.avanade.decolatech.fintech.models.dto.response.AdminContasClienteDTO;
-import com.avanade.decolatech.fintech.models.entities.Conta;
-import com.avanade.decolatech.fintech.models.repositories.ContaRepository;
+import com.avanade.decolatech.fintech.models.dtos.responses.AdminContasClienteDTO;
 
 @Service
 public class ContaService {
@@ -16,6 +17,18 @@ public class ContaService {
 
     public List<Conta> listarContas(){
         return contaRepository.findAll();
+    }
+
+    public ValorResponseDto obterSaldoAtual(int id){
+        return contaRepository.obterSaldo(id);
+    }
+
+    public double obterEntradas(int id){
+        return contaRepository.obterEntradas(id);
+    }
+
+    public  double obterSaidas(int id){
+        return contaRepository.obterSaidas(id);
     }
 
     public Conta incluirConta(Conta conta){
