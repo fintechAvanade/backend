@@ -1,5 +1,6 @@
 package com.avanade.decolatech.fintech.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -35,6 +36,7 @@ public class Endereco {
 	private String complemento;
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "endereco")
+	@JsonIgnore
 	private List<Usuario> usuarios;
 
 	public int getId() {

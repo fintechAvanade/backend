@@ -29,18 +29,6 @@ public class Cartao {
     @Column(name = "ATIVO")
     private boolean ativo;
 
-    public Cartao() {
-    }
-
-    public Cartao(int id, Conta conta, String numeroCartao, String cvv, Date dataValidadeCartao, boolean ativo) {
-        this.setId(id);
-        this.setConta(conta);
-        this.setNumeroCartao(numeroCartao);
-        this.setCvv(cvv);
-        this.setDataValidadeCartao(dataValidadeCartao);
-        this.setAtivo(ativo);
-    }
-
     public int getId() {
         return id;
     }

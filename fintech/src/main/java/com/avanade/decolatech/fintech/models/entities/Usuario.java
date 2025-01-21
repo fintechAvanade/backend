@@ -51,30 +51,12 @@ public class Usuario {
 	@Column(name = "ATIVO")
 	private boolean ativo;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ID_ENDERECO")
 	private Endereco endereco;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "usuario")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "usuario")
 	private List<Conta> contas;
-
-	public Usuario() {
-	}
-
-	public Usuario(int id, String nome, String cpf, Date dataNascimento, String email, String telefone, String nomeUsuario, String hashSenha, Date dataUltimoAcesso, TipoUsuario tipoUsuario, int numerosTentativasAcesso, boolean ativo, Endereco endereco) {
-		this.setId(id);
-		this.setNome(nome);
-		this.setCpf(cpf);
-		this.setDataNascimento(dataNascimento);
-		this.setEmail(email);
-		this.setTelefone(telefone);
-		this.setNomeUsuario(nomeUsuario);
-		this.setHashSenha(hashSenha);
-		this.setDataUltimoAcesso(dataUltimoAcesso);
-		this.setTipoUsuario(tipoUsuario);
-		this.setNumerosTentativasAcesso(numerosTentativasAcesso);
-		this.setEndereco(endereco);
-	}
 
 	public int getId() {
 		return id;

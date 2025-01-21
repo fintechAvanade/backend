@@ -1,7 +1,9 @@
 package com.avanade.decolatech.fintech.controllers;
 
+import com.avanade.decolatech.fintech.models.dtos.responses.CartaoResponseDto;
 import com.avanade.decolatech.fintech.models.entities.Conta;
 import com.avanade.decolatech.fintech.models.entities.Endereco;
+import com.avanade.decolatech.fintech.models.services.CartaoService;
 import com.avanade.decolatech.fintech.models.services.ContaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,19 +16,12 @@ import java.util.List;
 @RequestMapping("/cartoes")
 public class CartaoController {
     @Autowired
-    private ContaService contaService;
+    private CartaoService cartaoService;
 
-    @GetMapping("/lista")
-    public ResponseEntity<List<Conta>> lista(){
-        return new ResponseEntity<List<Conta>>(contaService.listarContas(), HttpStatus.OK);
+    @GetMapping("conta/{id}")
+    public ResponseEntity<CartaoResponseDto> obterCartaoPeloIdConta(@PathVariable("id") int idConta){
+        return new ResponseEntity<CartaoResponseDto>(cartaoService.buscarCartaoPeloIdConta(idConta), HttpStatus.OK);
     }
 
-    @PostMapping("/novo")
-    public ResponseEntity<?> incluir(@RequestBody Conta conta){
-        try{
-            return new ResponseEntity<Conta>(contaService.incluirConta(conta), HttpStatus.CREATED);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
-    }
+
 }

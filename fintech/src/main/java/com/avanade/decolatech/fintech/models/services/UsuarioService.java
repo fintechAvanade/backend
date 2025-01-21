@@ -14,15 +14,9 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    public List<Usuario> listarUsuarios(){
-        return usuarioRepository.findAll();
-    }
-
     public UsuarioResponseDto obterUsuarioPorId(int idUsuario) {
         return usuarioRepository.listarUsuarioPeloId(idUsuario);
     }
 
-    public Usuario incluirUsuario(Usuario usuario){
-        return usuarioRepository.save(usuario);
-    }
+
 }
