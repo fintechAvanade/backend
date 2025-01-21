@@ -8,7 +8,7 @@ import com.avanade.decolatech.fintech.models.repositories.ContaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.avanade.decolatech.fintech.models.dtos.responses.AdminContasClienteDTO;
+import com.avanade.decolatech.fintech.models.dtos.responses.InfoContasResponseDto;
 
 @Service
 public class ContaService {
@@ -23,11 +23,11 @@ public class ContaService {
         return contaRepository.obterSaldo(id);
     }
 
-    public double obterEntradas(int id){
+    public ValorResponseDto obterEntradas(int id){
         return contaRepository.obterEntradas(id);
     }
 
-    public  double obterSaidas(int id){
+    public  ValorResponseDto obterSaidas(int id){
         return contaRepository.obterSaidas(id);
     }
 
@@ -35,7 +35,7 @@ public class ContaService {
         return contaRepository.save(conta);
     }
     
-    public List<AdminContasClienteDTO> listarContasGerenciamento(){
+    public List<InfoContasResponseDto> listarContasGerenciamento(){
     	return contaRepository.listarContasClienteGerenciamento();
     }
 }

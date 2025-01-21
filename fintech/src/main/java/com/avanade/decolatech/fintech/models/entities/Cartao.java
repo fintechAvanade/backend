@@ -1,17 +1,11 @@
 package com.avanade.decolatech.fintech.models.entities;
 
 import jakarta.persistence.*;
-import lombok.*;
 
 import java.util.Date;
 
 @Entity
 @Table(name = "TB_CARTAO")
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@EqualsAndHashCode(of = "id")
 public class Cartao {
     @Id
     @Column(name= "ID")
@@ -34,4 +28,64 @@ public class Cartao {
 
     @Column(name = "ATIVO")
     private boolean ativo;
+
+    public Cartao() {
+    }
+
+    public Cartao(int id, Conta conta, String numeroCartao, String cvv, Date dataValidadeCartao, boolean ativo) {
+        this.setId(id);
+        this.setConta(conta);
+        this.setNumeroCartao(numeroCartao);
+        this.setCvv(cvv);
+        this.setDataValidadeCartao(dataValidadeCartao);
+        this.setAtivo(ativo);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Conta getConta() {
+        return conta;
+    }
+
+    public void setConta(Conta conta) {
+        this.conta = conta;
+    }
+
+    public String getNumeroCartao() {
+        return numeroCartao;
+    }
+
+    public void setNumeroCartao(String numeroCartao) {
+        this.numeroCartao = numeroCartao;
+    }
+
+    public String getCvv() {
+        return cvv;
+    }
+
+    public void setCvv(String cvv) {
+        this.cvv = cvv;
+    }
+
+    public Date getDataValidadeCartao() {
+        return dataValidadeCartao;
+    }
+
+    public void setDataValidadeCartao(Date dataValidadeCartao) {
+        this.dataValidadeCartao = dataValidadeCartao;
+    }
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
 }

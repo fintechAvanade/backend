@@ -2,8 +2,7 @@ package com.avanade.decolatech.fintech.models.dtos.responses;
 
 import java.util.Date;
 
-
-public class AdminContasClienteDTO {
+public class InfoContasResponseDto {
 	private int id;
 	private String agencia;
 	private String numeroConta;
@@ -12,7 +11,7 @@ public class AdminContasClienteDTO {
 	private Date ultimoAcesso;
 	private boolean ativo;
 
-	public AdminContasClienteDTO(int id, String agencia, String numeroConta, String nome, Date ultimaMovimentacao, Date ultimoAcesso, boolean ativo) {
+	public InfoContasResponseDto(int id, String agencia, String numeroConta, String nome, Date ultimaMovimentacao, Date ultimoAcesso, boolean ativo) {
 		this.setId(id);
 		this.setAgencia(agencia);
 		this.setNumeroConta(numeroConta);

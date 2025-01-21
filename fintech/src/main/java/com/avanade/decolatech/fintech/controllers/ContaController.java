@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.avanade.decolatech.fintech.models.dtos.responses.AdminContasClienteDTO;
+import com.avanade.decolatech.fintech.models.dtos.responses.InfoContasResponseDto;
 
 @RestController
 @RequestMapping("/contas")
@@ -28,13 +28,13 @@ public class ContaController {
     }
 
     @GetMapping("{id}/entradas")
-    public ResponseEntity<Double> obterEntradas(@PathVariable("id") int idConta){
-        return new ResponseEntity<Double>(contaService.obterEntradas(idConta), HttpStatus.OK);
+    public ResponseEntity<ValorResponseDto> obterEntradas(@PathVariable("id") int idConta){
+        return new ResponseEntity<ValorResponseDto>(contaService.obterEntradas(idConta), HttpStatus.OK);
     }
 
     @GetMapping("{id}/saidas")
-    public ResponseEntity<Double> obterSaidas(@PathVariable("id") int idConta){
-        return new ResponseEntity<Double>(contaService.obterEntradas(idConta), HttpStatus.OK);
+    public ResponseEntity<ValorResponseDto> obterSaidas(@PathVariable("id") int idConta){
+        return new ResponseEntity<ValorResponseDto>(contaService.obterEntradas(idConta), HttpStatus.OK);
     }
 
     @PostMapping("/novo")
@@ -47,7 +47,7 @@ public class ContaController {
     }
     
     @GetMapping("/clientes")
-    public ResponseEntity<List<AdminContasClienteDTO>> listarClientes(){
-    	return new ResponseEntity<List<AdminContasClienteDTO>>(contaService.listarContasGerenciamento(), HttpStatus.OK);
+    public ResponseEntity<List<InfoContasResponseDto>> listarClientes(){
+    	return new ResponseEntity<List<InfoContasResponseDto>>(contaService.listarContasGerenciamento(), HttpStatus.OK);
     }
 }
