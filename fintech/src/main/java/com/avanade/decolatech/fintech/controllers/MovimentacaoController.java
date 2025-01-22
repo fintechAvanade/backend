@@ -25,8 +25,18 @@ public class MovimentacaoController {
     }
 
     @GetMapping("/{idConta}")
-    public ResponseEntity<List<MovimentacoesResponseDto>> listaByIdConta(@PathVariable("idConta") int idConta){
+    public ResponseEntity<List<MovimentacoesResponseDto>> listaPeloIdConta(@PathVariable("idConta") int idConta){
         return new ResponseEntity<List<MovimentacoesResponseDto>>(movimentacaoServices.listarMovimentacoesPeloIdConta(idConta), HttpStatus.OK);
+    }
+
+    @GetMapping("entradas/{idConta}")
+    public ResponseEntity<List<MovimentacoesResponseDto>> listaEntradasPeloIdConta(@PathVariable("idConta") int idConta){
+        return new ResponseEntity<List<MovimentacoesResponseDto>>(movimentacaoServices.listarMovimentacoesDebitadasPeloIdConta(idConta), HttpStatus.OK);
+    }
+
+    @GetMapping("saidas/{idConta}")
+    public ResponseEntity<List<MovimentacoesResponseDto>> listaSaidasPeloIdConta(@PathVariable("idConta") int idConta){
+        return new ResponseEntity<List<MovimentacoesResponseDto>>(movimentacaoServices.listarMovimentacoesCreditadasPeloIdConta(idConta), HttpStatus.OK);
     }
 
     @PostMapping("/novo")
