@@ -2,6 +2,7 @@ package com.avanade.decolatech.fintech.models.services;
 
 import java.util.List;
 
+import com.avanade.decolatech.fintech.models.dtos.responses.ChavePixResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,22 +13,26 @@ import com.avanade.decolatech.fintech.models.repositories.ChavePixRepository;
 public class ChavePixService {
 	
 	@Autowired
-	private ChavePixRepository repository;
+	private ChavePixRepository chavePixRepository;
 	
 	public List<ChavePix> findAll() {
-		return repository.findAll();
+		return chavePixRepository.findAll();
+	}
+
+	public List<ChavePixResponseDto> buscarChavePixPeloIdConta(int idConta){
+		return chavePixRepository.buscarChavePixPelaidConta(idConta);
 	}
 	
 	public ChavePix findById (int id) {
-		return repository.findById(id).orElse(null);
+		return chavePixRepository.findById(id).orElse(null);
 	}
 	
 	public ChavePix save(ChavePix chavePix) {
-		return repository.save(chavePix);
+		return chavePixRepository.save(chavePix);
 	}
 	
 	public void deleteBId (int id) {
-		repository.deleteById(id);
+		chavePixRepository.deleteById(id);
 	}
 	
 	

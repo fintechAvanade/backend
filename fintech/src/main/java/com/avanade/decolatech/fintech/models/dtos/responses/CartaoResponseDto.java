@@ -12,10 +12,10 @@ public class CartaoResponseDto {
     }
 
     public CartaoResponseDto(String numeroConta, String titular, Date dataExpiracao, String cvv) {
-        this.numeroConta = numeroConta;
-        this.titular = titular;
-        this.dataExpiracao = dataExpiracao;
-        this.cvv = cvv;
+        this.setNumeroConta(numeroConta);
+        this.setTitular(titular);
+        this.setDataExpiracao(dataExpiracao);
+        this.setCvv(cvv);
     }
 
     public String getNumeroConta() {
