@@ -7,6 +7,7 @@ import com.avanade.decolatech.fintech.models.services.ContaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.avanade.decolatech.fintech.models.dtos.responses.InfoContasResponseDto;
@@ -17,6 +18,7 @@ public class ContaController {
     @Autowired
     private ContaService contaService;
 
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     @GetMapping("/lista")
     public ResponseEntity<List<Conta>> listar(){
         return new ResponseEntity<List<Conta>>(contaService.listarContas(), HttpStatus.OK);
@@ -45,7 +47,8 @@ public class ContaController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
-    
+
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     @GetMapping("/clientes")
     public ResponseEntity<List<InfoContasResponseDto>> listarClientes(){
     	return new ResponseEntity<List<InfoContasResponseDto>>(contaService.listarContasGerenciamento(), HttpStatus.OK);

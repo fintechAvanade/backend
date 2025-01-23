@@ -3,7 +3,6 @@ package com.avanade.decolatech.fintech.controllers;
 import com.avanade.decolatech.fintech.models.dtos.responses.MovimentacoesResponseDto;
 import com.avanade.decolatech.fintech.models.entities.Movimentacao;
 import com.avanade.decolatech.fintech.models.services.MovimentacaoServices;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

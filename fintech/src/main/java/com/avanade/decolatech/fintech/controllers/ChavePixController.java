@@ -2,7 +2,6 @@ package com.avanade.decolatech.fintech.controllers;
 
 import java.util.List;
 
-import com.avanade.decolatech.fintech.models.dtos.responses.CartaoResponseDto;
 import com.avanade.decolatech.fintech.models.dtos.responses.ChavePixResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

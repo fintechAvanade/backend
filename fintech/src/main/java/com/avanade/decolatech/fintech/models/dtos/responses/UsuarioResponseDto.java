@@ -1,6 +1,7 @@
 package com.avanade.decolatech.fintech.models.dtos.responses;
 
 import com.avanade.decolatech.fintech.models.enums.TipoConta;
+import jakarta.persistence.EnumType;
 
 import java.util.Date;
 
@@ -28,9 +29,9 @@ public class UsuarioResponseDto {
             String estado,
             String numero,
             String complemento,
-            int agencia,
-            int numeroConta,
-            TipoConta tipoConta
+            String agencia,
+            String numeroConta,
+            String tipoConta
     ) {
         this.nome = nome;
         this.nomeUsuario = nomeUsuario;
@@ -39,7 +40,7 @@ public class UsuarioResponseDto {
         this.email = email;
         this.telefone = telefone;
         this.endereco = new EnderecoResponseDto(cep, cidade, bairro, logradouro, estado, numero, complemento);
-        this.conta = new ContaResponseDto(agencia, numeroConta, tipoConta);
+        this.conta = new ContaResponseDto(Integer.parseInt(agencia), Integer.parseInt(numeroConta), TipoConta.valueOf(tipoConta));
     }
 
     public String getNome() {

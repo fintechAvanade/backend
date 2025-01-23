@@ -3,8 +3,10 @@ package com.avanade.decolatech.fintech.models.entities;
 import java.util.Date;
 import java.util.List;
 
+import com.avanade.decolatech.fintech.models.dtos.requests.LoginRequestDto;
 import com.avanade.decolatech.fintech.models.enums.TipoUsuario;
 import jakarta.persistence.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Entity
 @Table(name = "TB_USUARIO")
@@ -169,4 +171,9 @@ public class Usuario {
 	public void setContas(List<Conta> contas) {
 		this.contas = contas;
 	}
+
+    public boolean isLoginCorrect(LoginRequestDto request, PasswordEncoder passwordEncoder) {
+    	return passwordEncoder.matches(request.getPassword(), this.hashSenha);
+	}
+
 }
