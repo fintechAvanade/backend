@@ -22,6 +22,14 @@ public class MovimentacaoServices {
         return movimentacaoRepository.listarMovimentacoesPorIdConta(idConta);
     }
 
+    public List<MovimentacoesResponseDto> listarMovimentacoesCreditadasPeloIdConta(int idConta) {
+        return movimentacaoRepository.listarMovimentacoesCreditadasPorIdConta(idConta);
+    }
+
+    public List<MovimentacoesResponseDto> listarMovimentacoesDebitadasPeloIdConta(int idConta) {
+        return movimentacaoRepository.listarMovimentacoesDebitadasPorIdConta(idConta);
+    }
+
     public Movimentacao incluirMovimentacao(Movimentacao movimentacao) {
         return movimentacaoRepository.save(movimentacao);
     }

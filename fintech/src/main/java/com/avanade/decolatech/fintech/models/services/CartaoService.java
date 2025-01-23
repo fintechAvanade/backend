@@ -1,5 +1,6 @@
 package com.avanade.decolatech.fintech.models.services;
 
+import com.avanade.decolatech.fintech.models.dtos.responses.CartaoResponseDto;
 import com.avanade.decolatech.fintech.models.entities.Cartao;
 import com.avanade.decolatech.fintech.models.repositories.CartaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,8 @@ public class CartaoService {
     @Autowired
     private CartaoRepository cartaoRepository;
 
-    public List<Cartao> listarCartao(){
-        return cartaoRepository.findAll();
+    public CartaoResponseDto buscarCartaoPeloIdConta(int idConta){
+        return cartaoRepository.buscarCartaoPeloIdConta(idConta);
     }
 
     public Cartao incluirCartao(Cartao cartao){

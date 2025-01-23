@@ -3,7 +3,6 @@ package com.avanade.decolatech.fintech.controllers;
 import com.avanade.decolatech.fintech.models.dtos.responses.MovimentacoesResponseDto;
 import com.avanade.decolatech.fintech.models.entities.Movimentacao;
 import com.avanade.decolatech.fintech.models.services.MovimentacaoServices;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,8 +24,18 @@ public class MovimentacaoController {
     }
 
     @GetMapping("/{idConta}")
-    public ResponseEntity<List<MovimentacoesResponseDto>> listaByIdConta(@PathVariable("idConta") int idConta){
+    public ResponseEntity<List<MovimentacoesResponseDto>> listaPeloIdConta(@PathVariable("idConta") int idConta){
         return new ResponseEntity<List<MovimentacoesResponseDto>>(movimentacaoServices.listarMovimentacoesPeloIdConta(idConta), HttpStatus.OK);
+    }
+
+    @GetMapping("entradas/{idConta}")
+    public ResponseEntity<List<MovimentacoesResponseDto>> listaEntradasPeloIdConta(@PathVariable("idConta") int idConta){
+        return new ResponseEntity<List<MovimentacoesResponseDto>>(movimentacaoServices.listarMovimentacoesDebitadasPeloIdConta(idConta), HttpStatus.OK);
+    }
+
+    @GetMapping("saidas/{idConta}")
+    public ResponseEntity<List<MovimentacoesResponseDto>> listaSaidasPeloIdConta(@PathVariable("idConta") int idConta){
+        return new ResponseEntity<List<MovimentacoesResponseDto>>(movimentacaoServices.listarMovimentacoesCreditadasPeloIdConta(idConta), HttpStatus.OK);
     }
 
     @PostMapping("/novo")

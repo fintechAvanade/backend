@@ -19,7 +19,7 @@ public class Conta {
 	private int agencia;
 	
 	@Column(name = "NUMERO_CONTA")
-	private int numeroConta;
+	private long numeroConta;
 	
 	@Column(name = "SALDO")
 	private double saldo;
@@ -60,11 +60,11 @@ public class Conta {
 		this.agencia = agencia;
 	}
 
-	public int getNumeroConta() {
+	public long getNumeroConta() {
 		return numeroConta;
 	}
 
-	public void setNumeroConta(int numeroConta) {
+	public void setNumeroConta(long numeroConta) {
 		this.numeroConta = numeroConta;
 	}
 
