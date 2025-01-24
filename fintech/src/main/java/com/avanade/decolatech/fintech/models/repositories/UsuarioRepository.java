@@ -16,26 +16,11 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
         u.cpf AS cpf,
         u.DATA_NASCIMENTO AS dataNascimento,
         u.email AS email,
-        u.telefone AS telefone,
-        e.cep AS cep,
-        e.cidade AS cidade,
-        e.bairro AS bairro,
-        e.logradouro AS logradouro,
-        e.estado AS estado,
-        e.numero AS numero,
-        e.complemento AS complemento,
-        c.agencia AS agencia,
-        c.NUMERO_CONTA AS numeroConta,
-        c.TIPO_CONTA AS tipoConta
+        u.telefone AS telefone
     FROM TB_USUARIO u\s
-    INNER JOIN TB_ENDERECO e ON u.ID_ENDERECO = e.ID\s
-    INNER JOIN TB_CONTA c ON c.ID_USUARIO = u.ID
     WHERE u.id = :idUsuario
    \s""", nativeQuery = true)
     UsuarioResponseDto listarUsuarioPeloId(@Param("idUsuario") int idUsuario);
-
-
-    Optional<Usuario> findById(int idUsuario);
 
     Optional<Usuario> findByNomeUsuario(String username);
 }

@@ -17,6 +17,4 @@ public class CartaoController {
     public ResponseEntity<CartaoResponseDto> obterCartaoPeloIdConta(@PathVariable("id") int idConta){
         return new ResponseEntity<CartaoResponseDto>(cartaoService.buscarCartaoPeloIdConta(idConta), HttpStatus.OK);
     }
-
-
 }

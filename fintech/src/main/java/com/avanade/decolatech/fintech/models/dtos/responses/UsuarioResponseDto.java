@@ -1,8 +1,5 @@
 package com.avanade.decolatech.fintech.models.dtos.responses;
 
-import com.avanade.decolatech.fintech.models.enums.TipoConta;
-import jakarta.persistence.EnumType;
-
 import java.util.Date;
 
 public class UsuarioResponseDto {
@@ -12,8 +9,6 @@ public class UsuarioResponseDto {
     private Date dataNascimento;
     private String email;
     private String telefone;
-    private EnderecoResponseDto endereco;
-    private ContaResponseDto conta;
 
     public UsuarioResponseDto(){};
 
@@ -23,17 +18,7 @@ public class UsuarioResponseDto {
             String cpf,
             Date dataNascimento,
             String email,
-            String telefone,
-            String cep,
-            String cidade,
-            String bairro,
-            String logradouro,
-            String estado,
-            String numero,
-            String complemento,
-            String agencia,
-            String numeroConta,
-            String tipoConta
+            String telefone
     ) {
         this.nome = nome;
         this.nomeUsuario = nomeUsuario;
@@ -41,8 +26,6 @@ public class UsuarioResponseDto {
         this.dataNascimento = dataNascimento;
         this.email = email;
         this.telefone = telefone;
-        this.endereco = new EnderecoResponseDto(cep, cidade, bairro, logradouro, estado, numero, complemento);
-        this.conta = new ContaResponseDto(agencia, numeroConta, TipoConta.valueOf(tipoConta));
     }
 
     public String getNome() {
@@ -91,21 +74,5 @@ public class UsuarioResponseDto {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
-    }
-
-    public EnderecoResponseDto getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(EnderecoResponseDto endereco) {
-        this.endereco = endereco;
-    }
-
-    public ContaResponseDto getConta() {
-        return conta;
-    }
-
-    public void setConta(ContaResponseDto conta) {
-        this.conta = conta;
     }
 }
