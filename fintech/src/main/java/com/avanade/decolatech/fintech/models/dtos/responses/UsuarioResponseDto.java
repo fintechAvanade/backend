@@ -15,6 +15,8 @@ public class UsuarioResponseDto {
     private EnderecoResponseDto endereco;
     private ContaResponseDto conta;
 
+    public UsuarioResponseDto(){};
+
     public UsuarioResponseDto(
             String nome,
             String nomeUsuario,
@@ -40,7 +42,7 @@ public class UsuarioResponseDto {
         this.email = email;
         this.telefone = telefone;
         this.endereco = new EnderecoResponseDto(cep, cidade, bairro, logradouro, estado, numero, complemento);
-        this.conta = new ContaResponseDto(Integer.parseInt(agencia), Integer.parseInt(numeroConta), TipoConta.valueOf(tipoConta));
+        this.conta = new ContaResponseDto(agencia, numeroConta, TipoConta.valueOf(tipoConta));
     }
 
     public String getNome() {

@@ -13,6 +13,7 @@ public interface ChavePixRepository extends JpaRepository<ChavePix, Integer> {
 
     @Query(value = """
             SELECT\s
+                CP.ID AS id,\s
                 CP.TIPO_CHAVE_PIX AS tipoChavePix,\s
                 CP.VALOR_CHAVE_PIX AS chave\s
             FROM TB_CHAVE_PIX CP\s

@@ -3,13 +3,13 @@ package com.avanade.decolatech.fintech.models.dtos.responses;
 import com.avanade.decolatech.fintech.models.enums.TipoConta;
 
 public class ContaResponseDto {
-    private int agencia;
-    private int numeroConta;
+    private String agencia;
+    private String numeroConta;
     private TipoConta tipoConta;
 
     public ContaResponseDto(
-            int agencia,
-            int numeroConta,
+            String agencia,
+            String numeroConta,
             TipoConta tipoConta
     ) {
         this.agencia = agencia;
@@ -17,19 +17,19 @@ public class ContaResponseDto {
         this.tipoConta = tipoConta;
     }
 
-    public int getAgencia() {
+    public String getAgencia() {
         return agencia;
     }
 
-    public void setAgencia(int agencia) {
+    public void setAgencia(String agencia) {
         this.agencia = agencia;
     }
 
-    public int getNumeroConta() {
+    public String getNumeroConta() {
         return numeroConta;
     }
 
-    public void setNumeroConta(int numeroConta) {
+    public void setNumeroConta(String numeroConta) {
         this.numeroConta = numeroConta;
     }
 

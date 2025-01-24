@@ -34,5 +34,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
    \s""", nativeQuery = true)
     UsuarioResponseDto listarUsuarioPeloId(@Param("idUsuario") int idUsuario);
 
+
+    Optional<Usuario> findById(int idUsuario);
+
     Optional<Usuario> findByNomeUsuario(String username);
 }

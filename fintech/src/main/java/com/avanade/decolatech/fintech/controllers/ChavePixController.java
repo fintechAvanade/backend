@@ -29,7 +29,7 @@ public class ChavePixController {
 		return chavePixService.findAll();
 	}
 
-	@GetMapping("/conta/{id}")
+	@GetMapping("lista/conta/{id}")
 	public ResponseEntity<List<ChavePixResponseDto>> buscarChavesPelaidConta(@PathVariable("id") int idConta){
 		return new ResponseEntity<List<ChavePixResponseDto>>(chavePixService.buscarChavePixPeloIdConta(idConta), HttpStatus.OK);
 	}

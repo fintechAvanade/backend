@@ -22,7 +22,6 @@ public class UsuarioController {
     }
 
     @PostMapping("/novo")
-    @Transactional
     public ResponseEntity<LoginResponseDto> incluirUsuario(@RequestBody CriarUsuarioRequestDto request){
         return new ResponseEntity<LoginResponseDto>(usuarioService.cadastrarUsuario(request), HttpStatus.CREATED);
     }

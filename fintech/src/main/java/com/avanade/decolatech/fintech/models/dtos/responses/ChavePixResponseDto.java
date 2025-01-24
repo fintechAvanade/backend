@@ -3,15 +3,25 @@ package com.avanade.decolatech.fintech.models.dtos.responses;
 import com.avanade.decolatech.fintech.models.enums.TipoChavePix;
 
 public class ChavePixResponseDto {
+    private int id;
     private String tipoChavePix;
     private String chave;
 
     public ChavePixResponseDto() {
     }
 
-    public ChavePixResponseDto(String tipoChavePix, String chave) {
+    public ChavePixResponseDto(int id, String tipoChavePix, String chave) {
+        this.setId(id);
         this.setTipoChavePix(tipoChavePix);
         this.setChave(chave);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTipoChavePix() {

@@ -11,6 +11,7 @@ import com.avanade.decolatech.fintech.models.entities.Usuario;
 import com.avanade.decolatech.fintech.models.enums.TipoConta;
 import com.avanade.decolatech.fintech.models.enums.TipoUsuario;
 import com.avanade.decolatech.fintech.models.repositories.UsuarioRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -49,6 +50,7 @@ public class UsuarioService {
         return usuarioRepository.listarUsuarioPeloId(idUsuario);
     }
 
+    @Transactional
     public LoginResponseDto cadastrarUsuario(CriarUsuarioRequestDto request){
         var usuarioBanco = usuarioRepository.findByNomeUsuario(request.getNomeUsuario());
 
