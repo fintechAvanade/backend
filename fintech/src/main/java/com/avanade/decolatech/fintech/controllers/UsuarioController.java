@@ -1,6 +1,6 @@
 package com.avanade.decolatech.fintech.controllers;
 
-import com.avanade.decolatech.fintech.models.dtos.requests.CreateUsuarioRequestDto;
+import com.avanade.decolatech.fintech.models.dtos.requests.CriarUsuarioRequestDto;
 import com.avanade.decolatech.fintech.models.dtos.responses.LoginResponseDto;
 import com.avanade.decolatech.fintech.models.dtos.responses.UsuarioResponseDto;
 import com.avanade.decolatech.fintech.models.services.UsuarioService;
@@ -23,7 +23,7 @@ public class UsuarioController {
 
     @PostMapping("/novo")
     @Transactional
-    public ResponseEntity<LoginResponseDto> incluirUsuario(@RequestBody CreateUsuarioRequestDto request){
+    public ResponseEntity<LoginResponseDto> incluirUsuario(@RequestBody CriarUsuarioRequestDto request){
         return new ResponseEntity<LoginResponseDto>(usuarioService.cadastrarUsuario(request), HttpStatus.CREATED);
     }
 }

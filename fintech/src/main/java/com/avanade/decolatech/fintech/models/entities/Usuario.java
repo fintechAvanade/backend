@@ -3,7 +3,8 @@ package com.avanade.decolatech.fintech.models.entities;
 import java.util.Date;
 import java.util.List;
 
-import com.avanade.decolatech.fintech.models.dtos.requests.LoginRequestDto;
+import com.avanade.decolatech.fintech.models.dtos.requests.LoginAdminRequestDto;
+import com.avanade.decolatech.fintech.models.dtos.requests.LoginClienteRequestDto;
 import com.avanade.decolatech.fintech.models.enums.TipoUsuario;
 import jakarta.persistence.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -172,8 +173,12 @@ public class Usuario {
 		this.contas = contas;
 	}
 
-    public boolean isLoginCorrect(LoginRequestDto request, PasswordEncoder passwordEncoder) {
-    	return passwordEncoder.matches(request.getPassword(), this.hashSenha);
+    public boolean isLoginCorrect(LoginAdminRequestDto request, PasswordEncoder passwordEncoder) {
+    	return passwordEncoder.matches(request.getSenha(), this.hashSenha);
+	}
+
+	public boolean isLoginCorrect(LoginClienteRequestDto request, PasswordEncoder passwordEncoder) {
+    	return passwordEncoder.matches(request.getSenha(), this.hashSenha);
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.avanade.decolatech.fintech.controllers;
 
-import com.avanade.decolatech.fintech.models.dtos.requests.LoginRequestDto;
+import com.avanade.decolatech.fintech.models.dtos.requests.LoginAdminRequestDto;
+import com.avanade.decolatech.fintech.models.dtos.requests.LoginClienteRequestDto;
 import com.avanade.decolatech.fintech.models.dtos.responses.LoginResponseDto;
 import com.avanade.decolatech.fintech.models.services.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,13 @@ public class TokenController {
     @Autowired
     private TokenService service;
 
-    @PostMapping("/login")
-    public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto request){
+    @PostMapping("/login-admin")
+    public ResponseEntity<LoginResponseDto> loginAdmin(@RequestBody LoginAdminRequestDto request){
+        return new ResponseEntity<LoginResponseDto>(service.logar(request), HttpStatus.OK);
+    }
+
+    @PostMapping("/login-cliente")
+    public ResponseEntity<LoginResponseDto> loginAdmin(@RequestBody LoginClienteRequestDto request){
         return new ResponseEntity<LoginResponseDto>(service.logar(request), HttpStatus.OK);
     }
 }

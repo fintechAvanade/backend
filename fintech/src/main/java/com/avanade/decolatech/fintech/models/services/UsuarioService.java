@@ -1,16 +1,15 @@
 package com.avanade.decolatech.fintech.models.services;
 
-import com.avanade.decolatech.fintech.models.dtos.requests.CreateUsuarioRequestDto;
-import com.avanade.decolatech.fintech.models.dtos.requests.LoginRequestDto;
+import com.avanade.decolatech.fintech.models.dtos.requests.CriarUsuarioRequestDto;
+import com.avanade.decolatech.fintech.models.dtos.requests.LoginAdminRequestDto;
 import com.avanade.decolatech.fintech.models.dtos.responses.LoginResponseDto;
 import com.avanade.decolatech.fintech.models.dtos.responses.UsuarioResponseDto;
+import com.avanade.decolatech.fintech.models.entities.Cartao;
 import com.avanade.decolatech.fintech.models.entities.Conta;
 import com.avanade.decolatech.fintech.models.entities.Endereco;
 import com.avanade.decolatech.fintech.models.entities.Usuario;
 import com.avanade.decolatech.fintech.models.enums.TipoConta;
 import com.avanade.decolatech.fintech.models.enums.TipoUsuario;
-import com.avanade.decolatech.fintech.models.repositories.ContaRepository;
-import com.avanade.decolatech.fintech.models.repositories.EnderecoRepository;
 import com.avanade.decolatech.fintech.models.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +17,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.Year;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.Random;
 
 @Service
@@ -34,6 +37,9 @@ public class UsuarioService {
     private ContaService contaService;
 
     @Autowired
+    private CartaoService cartaoService;
+
+    @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
@@ -43,7 +49,7 @@ public class UsuarioService {
         return usuarioRepository.listarUsuarioPeloId(idUsuario);
     }
 
-    public LoginResponseDto cadastrarUsuario(CreateUsuarioRequestDto request){
+    public LoginResponseDto cadastrarUsuario(CriarUsuarioRequestDto request){
         var usuarioBanco = usuarioRepository.findByNomeUsuario(request.getNomeUsuario());
 
         if(usuarioBanco.isPresent()) throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
@@ -78,16 +84,24 @@ public class UsuarioService {
         //Criar uma conta
         var random = new Random();
         var conta = new Conta();
-        conta.setAgencia(0001);
-        conta.setNumeroConta(1_000_000_000L+random.nextLong(9_000_000_000L));
+        conta.setAgencia("0001");
+        conta.setNumeroConta(String.valueOf(1_000_000_000L+random.nextLong(9_000_000_000L)));
         conta.setSaldo(0);
         conta.setHashSenhaPagamento(passwordEncoder.encode(String.valueOf(100000+random.nextInt(900000))));
         conta.setAtivo(true);
         conta.setTipoConta(TipoConta.SIMPLES);
         conta.setUsuario(usuarioDb);
-        contaService.incluirConta(conta);
+        var contaDb = contaService.incluirConta(conta);
 
-        return tokenService.logar(new LoginRequestDto(request.getNomeUsuario(), request.getSenha()));
+        var cartao = new Cartao();
+        cartao.setNumeroCartao(String.valueOf(1_000_000_000_000_000L+random.nextLong(9_000_000_000_000_000L)));
+        cartao.setCvv(String.valueOf(100+random.nextInt(900)));
+        cartao.setDataValidadeCartao(Date.from(LocalDate.now().plusYears(5).atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        cartao.setConta(contaDb);
+        cartao.setAtivo(true);
+        cartaoService.incluirCartao(cartao);
+
+        return tokenService.logar(new LoginAdminRequestDto(request.getNomeUsuario(), request.getSenha()));
     }
 
 }

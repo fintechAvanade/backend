@@ -1,7 +1,6 @@
 package com.avanade.decolatech.fintech.models.entities;
 
 import com.avanade.decolatech.fintech.models.enums.TipoConta;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -16,10 +15,10 @@ public class Conta {
 	private int id;
 	
 	@Column(name = "AGENCIA")
-	private int agencia;
+	private String agencia;
 	
 	@Column(name = "NUMERO_CONTA")
-	private long numeroConta;
+	private String numeroConta;
 	
 	@Column(name = "SALDO")
 	private double saldo;
@@ -52,19 +51,19 @@ public class Conta {
 		this.id = id;
 	}
 
-	public int getAgencia() {
+	public String getAgencia() {
 		return agencia;
 	}
 
-	public void setAgencia(int agencia) {
+	public void setAgencia(String agencia) {
 		this.agencia = agencia;
 	}
 
-	public long getNumeroConta() {
+	public String getNumeroConta() {
 		return numeroConta;
 	}
 
-	public void setNumeroConta(long numeroConta) {
+	public void setNumeroConta(String numeroConta) {
 		this.numeroConta = numeroConta;
 	}
 

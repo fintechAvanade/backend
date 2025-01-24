@@ -2,7 +2,7 @@ package com.avanade.decolatech.fintech.models.dtos.requests;
 
 import java.util.Date;
 
-public class CreateUsuarioRequestDto {
+public class CriarUsuarioRequestDto {
     private String nome;
     private String cpf;
     private Date dataNascimento;
@@ -18,10 +18,10 @@ public class CreateUsuarioRequestDto {
     private int numero;
     private String complemento;
 
-    public CreateUsuarioRequestDto() {
+    public CriarUsuarioRequestDto() {
     }
 
-    public CreateUsuarioRequestDto(String nome, String cpf, Date dataNascimento, String email, String telefone, String nomeUsuario, String senha, String cep, String cidade, String bairro, String logradouro, String estado, int numero, String complemento) {
+    public CriarUsuarioRequestDto(String nome, String cpf, Date dataNascimento, String email, String telefone, String nomeUsuario, String senha, String cep, String cidade, String bairro, String logradouro, String estado, int numero, String complemento) {
         this.setNome(nome);
         this.setCpf(cpf);
         this.setDataNascimento(dataNascimento);
