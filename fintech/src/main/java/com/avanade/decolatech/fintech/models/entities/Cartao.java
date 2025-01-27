@@ -69,7 +69,7 @@ public class Cartao {
         this.dataValidadeCartao = dataValidadeCartao;
     }
 
-    public boolean isAtivo() {
+    public boolean getAtivo() {
         return ativo;
     }
 

@@ -23,11 +23,6 @@ public class ChavePixController {
 	
 	@Autowired
 	private ChavePixService chavePixService;
-	
-	@GetMapping("/lista")
-	public List<ChavePix> lista() {
-		return chavePixService.findAll();
-	}
 
 	@GetMapping("lista/conta/{id}")
 	public ResponseEntity<List<ChavePixResponseDto>> buscarChavesPelaidConta(@PathVariable("id") int idConta){
@@ -36,12 +31,8 @@ public class ChavePixController {
 
 	@PostMapping("/novo")
 	public ChavePix cadastrar(@RequestBody ChavePix chavePix) {
-		return chavePixService.save(chavePix);
+		return chavePixService.salvarChavePix(chavePix);
 	}
-	
-	@DeleteMapping("/{id}")
-	public void deleteById (@PathVariable int id) {
-		chavePixService.deleteBId(id);
-	}
+
 	
 }

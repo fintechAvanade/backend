@@ -11,6 +11,7 @@ import java.util.Optional;
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     @Query(value = """
     SELECT\s
+        u.id AS id,
         u.nome AS nome,
         u.usuario AS nomeUsuario,
         u.cpf AS cpf,
@@ -20,7 +21,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     FROM TB_USUARIO u\s
     WHERE u.id = :idUsuario
    \s""", nativeQuery = true)
-    UsuarioResponseDto listarUsuarioPeloId(@Param("idUsuario") int idUsuario);
+    UsuarioResponseDto buscarUsuarioPeloId(@Param("idUsuario") int idUsuario);
 
     Optional<Usuario> findByNomeUsuario(String username);
 }

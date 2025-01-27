@@ -16,12 +16,11 @@ public class EnderecoService {
         return enderecoRepository.findAll();
     }
 
-    public Endereco incluirEndereco(Endereco endereco){
+    public Endereco salvarEndereco(Endereco endereco){
         return enderecoRepository.save(endereco);
     }
 
     public Endereco atualizarEndereco(Endereco endereco){
         return enderecoRepository.save(endereco);
     }
-
 }

@@ -3,6 +3,7 @@ package com.avanade.decolatech.fintech.models.dtos.responses;
 import java.util.Date;
 
 public class UsuarioResponseDto {
+    private int id;
     private String nome;
     private String nomeUsuario;
     private String cpf;
@@ -13,6 +14,7 @@ public class UsuarioResponseDto {
     public UsuarioResponseDto(){};
 
     public UsuarioResponseDto(
+            int id,
             String nome,
             String nomeUsuario,
             String cpf,
@@ -20,12 +22,21 @@ public class UsuarioResponseDto {
             String email,
             String telefone
     ) {
-        this.nome = nome;
-        this.nomeUsuario = nomeUsuario;
-        this.cpf = cpf;
-        this.dataNascimento = dataNascimento;
-        this.email = email;
-        this.telefone = telefone;
+        this.setId(id);
+        this.setNome(nome);
+        this.setNomeUsuario(nomeUsuario);
+        this.setCpf(cpf);
+        this.setDataNascimento(dataNascimento);
+        this.setEmail(email);
+        this.setTelefone(telefone);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNome() {

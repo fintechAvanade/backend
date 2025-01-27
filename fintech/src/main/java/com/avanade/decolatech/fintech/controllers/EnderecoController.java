@@ -21,9 +21,9 @@ public class EnderecoController {
     }
 
     @PostMapping("/novo")
-    public ResponseEntity<?> incluir(@RequestBody Endereco endereco){
+    public ResponseEntity<?> cadastrar(@RequestBody Endereco endereco){
         try {
-            return new ResponseEntity<Endereco>(enderecoService.incluirEndereco(endereco), HttpStatus.CREATED);
+            return new ResponseEntity<Endereco>(enderecoService.salvarEndereco(endereco), HttpStatus.CREATED);
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }

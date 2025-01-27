@@ -42,7 +42,7 @@ public class ContaController {
     @PostMapping("/novo")
     public ResponseEntity<?> incluir(@RequestBody Conta conta){
         try{
-            return new ResponseEntity<Conta>(contaService.incluirConta(conta), HttpStatus.CREATED);
+            return new ResponseEntity<Conta>(contaService.salvarConta(conta), HttpStatus.CREATED);
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }

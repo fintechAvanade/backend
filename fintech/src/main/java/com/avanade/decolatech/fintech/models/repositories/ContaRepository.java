@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.avanade.decolatech.fintech.models.dtos.responses.ValorResponseDto;
+import com.avanade.decolatech.fintech.models.entities.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -12,7 +13,10 @@ import com.avanade.decolatech.fintech.models.entities.Conta;
 import org.springframework.data.repository.query.Param;
 
 public interface ContaRepository extends JpaRepository<Conta, Integer> {
+
     Optional<Conta> findByAgenciaAndNumeroConta(String agencia, String numeroConta);
+
+    Optional<Conta> findByUsuario(Usuario usuario);
 
     @Query(value = """
             SELECT
