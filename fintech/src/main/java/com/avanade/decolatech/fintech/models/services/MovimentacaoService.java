@@ -1,0 +1,148 @@
+package com.avanade.decolatech.fintech.models.services;
+
+
+import com.avanade.decolatech.fintech.models.dtos.requests.TransferirRequestDto;
+import com.avanade.decolatech.fintech.models.dtos.requests.ValorRequestDto;
+import com.avanade.decolatech.fintech.models.dtos.responses.MovimentacoesResponseDto;
+import com.avanade.decolatech.fintech.models.dtos.responses.ValorResponseDto;
+import com.avanade.decolatech.fintech.models.entities.Movimentacao;
+import com.avanade.decolatech.fintech.models.enums.Direcao;
+import com.avanade.decolatech.fintech.models.enums.StatusMovimentacao;
+import com.avanade.decolatech.fintech.models.enums.TipoMovimentacao;
+import com.avanade.decolatech.fintech.models.repositories.MovimentacaoRepository;
+import jakarta.transaction.Transactional;
+import org.apache.commons.lang3.NotImplementedException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.time.Instant;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
+
+@Service
+public class MovimentacaoService {
+    @Autowired
+    private MovimentacaoRepository movimentacaoRepository;
+
+    @Autowired
+    private ContaService contaService;
+
+    public List<Movimentacao> listarMovimentacoes() {
+        return movimentacaoRepository.findAll();
+    }
+
+    public List<MovimentacoesResponseDto> listarMovimentacoesPeloIdConta(int idConta) {
+        return movimentacaoRepository.listarMovimentacoesPorIdConta(idConta);
+    }
+
+    public List<MovimentacoesResponseDto> listarMovimentacoesCreditadasPeloIdConta(int idConta) {
+        return movimentacaoRepository.listarMovimentacoesCreditadasPorIdConta(idConta);
+    }
+
+    public List<MovimentacoesResponseDto> listarMovimentacoesDebitadasPeloIdConta(int idConta) {
+        return movimentacaoRepository.listarMovimentacoesDebitadasPorIdConta(idConta);
+    }
+
+    public Movimentacao salvarMovimentacao(Movimentacao movimentacao) {
+        return movimentacaoRepository.save(movimentacao);
+    }
+
+    @Transactional
+    public ValorResponseDto sacar(int idConta, ValorRequestDto request) {
+        var conta = contaService.buscarContaPeloId(idConta);
+
+        var movimentacao = new Movimentacao();
+        movimentacao.setConta(conta);
+        movimentacao.setCodigoMovimentacao(String.valueOf(UUID.randomUUID()));
+        movimentacao.setStatus(StatusMovimentacao.PENDENTE);
+        movimentacao.setTipoMovimentacao(TipoMovimentacao.SAQUE);
+        movimentacao.setDataMovimentacao(Date.from(Instant.now()));
+        movimentacao.setDirecao(Direcao.CREDITO);
+        movimentacao.setDescricao(request.getDescricao());
+        movimentacao.setValorMovimentacao(request.getValor());
+        movimentacao.setPercentualTaxa(0);
+        movimentacao.setValorTotalMovimentacao(request.getValor());
+
+        var movimentacaoDb = this.salvarMovimentacao(movimentacao);
+
+        if(request.getValor() > conta.getSaldo()){
+            movimentacaoDb.setStatus(StatusMovimentacao.ERRO);
+            this.salvarMovimentacao(movimentacaoDb);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
+        conta.setSaldo(conta.getSaldo()-request.getValor());
+        contaService.salvarConta(conta);
+
+        movimentacaoDb.setStatus(StatusMovimentacao.SUCESSO);
+        this.salvarMovimentacao(movimentacaoDb);
+
+        return new ValorResponseDto(request.getValor());
+    }
+
+    @Transactional
+    public ValorResponseDto depositar(int idConta, ValorRequestDto request) {
+        var conta = contaService.buscarContaPeloId(idConta);
+
+        conta.setSaldo(conta.getSaldo()+request.getValor());
+
+        var movimentacao = new Movimentacao();
+        movimentacao.setConta(conta);
+        movimentacao.setCodigoMovimentacao(String.valueOf(UUID.randomUUID()));
+        movimentacao.setStatus(StatusMovimentacao.SUCESSO);
+        movimentacao.setTipoMovimentacao(TipoMovimentacao.DEPOSITO);
+        movimentacao.setDataMovimentacao(Date.from(Instant.now()));
+        movimentacao.setDirecao(Direcao.DEBITO);
+        movimentacao.setDescricao(request.getDescricao());
+        movimentacao.setValorMovimentacao(request.getValor());
+        movimentacao.setPercentualTaxa(0);
+        movimentacao.setValorTotalMovimentacao(request.getValor());
+
+        contaService.salvarConta(conta);
+        this.salvarMovimentacao(movimentacao);
+
+        return new ValorResponseDto(request.getValor());
+    }
+
+
+    public ValorResponseDto transferenciaEntreContas(int idContaOrigem, TransferirRequestDto request) {
+        var origem = contaService.buscarContaPeloId(idContaOrigem);
+        var destino = contaService.buscarContaPeloId(request.getDestino());
+
+        var codigoMovimentacao = String.valueOf(UUID.randomUUID());
+        var data = Date.from(Instant.now());
+
+        var movimentacaoOrigem = new Movimentacao();
+        movimentacaoOrigem.setConta(origem);
+        movimentacaoOrigem.setCodigoMovimentacao(codigoMovimentacao);
+        movimentacaoOrigem.setStatus(StatusMovimentacao.PENDENTE);
+        movimentacaoOrigem.setTipoMovimentacao(TipoMovimentacao.TRANSFERENCIA);
+        movimentacaoOrigem.setDataMovimentacao(data);
+        movimentacaoOrigem.setDirecao(Direcao.CREDITO);
+        movimentacaoOrigem.setDescricao(request.getDescricao());
+        movimentacaoOrigem.setValorMovimentacao(request.getValor());
+        movimentacaoOrigem.setPercentualTaxa(0.02);
+        movimentacaoOrigem.setValorTotalMovimentacao(request.getValor() * movimentacaoOrigem.getPercentualTaxa());
+
+        var movimentacaoOrigemDb = this.salvarMovimentacao(movimentacaoOrigem);
+
+        var movimentacaoDestino = new Movimentacao();
+        movimentacaoDestino.setConta(origem);
+        movimentacaoDestino.setCodigoMovimentacao(String.valueOf(UUID.randomUUID()));
+        movimentacaoDestino.setStatus(StatusMovimentacao.PENDENTE);
+        movimentacaoDestino.setTipoMovimentacao(TipoMovimentacao.SAQUE);
+        movimentacaoDestino.setDataMovimentacao(Date.from(Instant.now()));
+        movimentacaoDestino.setDirecao(Direcao.CREDITO);
+        movimentacaoDestino.setDescricao(request.getDescricao());
+        movimentacaoDestino.setValorMovimentacao(request.getValor());
+        movimentacaoDestino.setPercentualTaxa(0.02);
+        movimentacaoDestino.setValorTotalMovimentacao(request.getValor());
+
+        var movimentacaoDestinoDb = this.salvarMovimentacao(movimentacaoOrigem);
+
+        throw new NotImplementedException();
+    }
+}

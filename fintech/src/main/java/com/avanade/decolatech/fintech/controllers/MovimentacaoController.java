@@ -1,8 +1,11 @@
 package com.avanade.decolatech.fintech.controllers;
 
+import com.avanade.decolatech.fintech.models.dtos.requests.TransferirRequestDto;
+import com.avanade.decolatech.fintech.models.dtos.requests.ValorRequestDto;
 import com.avanade.decolatech.fintech.models.dtos.responses.MovimentacoesResponseDto;
+import com.avanade.decolatech.fintech.models.dtos.responses.ValorResponseDto;
 import com.avanade.decolatech.fintech.models.entities.Movimentacao;
-import com.avanade.decolatech.fintech.models.services.MovimentacaoServices;
+import com.avanade.decolatech.fintech.models.services.MovimentacaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,36 +18,35 @@ import java.util.List;
 public class MovimentacaoController {
 
     @Autowired
-    private MovimentacaoServices movimentacaoServices;
-
-    @GetMapping("lista")
-    public ResponseEntity<List<Movimentacao>> lista(){
-        return new ResponseEntity<List<Movimentacao>>(movimentacaoServices.listarMovimentacoes(), HttpStatus.OK);
-
-    }
+    private MovimentacaoService movimentacaoService;
 
     @GetMapping("/{idConta}")
     public ResponseEntity<List<MovimentacoesResponseDto>> listaPeloIdConta(@PathVariable("idConta") int idConta){
-        return new ResponseEntity<List<MovimentacoesResponseDto>>(movimentacaoServices.listarMovimentacoesPeloIdConta(idConta), HttpStatus.OK);
+        return new ResponseEntity<List<MovimentacoesResponseDto>>(movimentacaoService.listarMovimentacoesPeloIdConta(idConta), HttpStatus.OK);
     }
 
     @GetMapping("entradas/{idConta}")
     public ResponseEntity<List<MovimentacoesResponseDto>> listaEntradasPeloIdConta(@PathVariable("idConta") int idConta){
-        return new ResponseEntity<List<MovimentacoesResponseDto>>(movimentacaoServices.listarMovimentacoesDebitadasPeloIdConta(idConta), HttpStatus.OK);
+        return new ResponseEntity<List<MovimentacoesResponseDto>>(movimentacaoService.listarMovimentacoesDebitadasPeloIdConta(idConta), HttpStatus.OK);
     }
 
     @GetMapping("saidas/{idConta}")
-    public ResponseEntity<List<MovimentacoesResponseDto>> listaSaidasPeloIdConta(@PathVariable("idConta") int idConta){
-        return new ResponseEntity<List<MovimentacoesResponseDto>>(movimentacaoServices.listarMovimentacoesCreditadasPeloIdConta(idConta), HttpStatus.OK);
+    public ResponseEntity<List<MovimentacoesResponseDto>> listaSaidasPeloIdConta(@PathVariable("idConta") int idConta) {
+        return new ResponseEntity<List<MovimentacoesResponseDto>>(movimentacaoService.listarMovimentacoesCreditadasPeloIdConta(idConta), HttpStatus.OK);
     }
 
-    @PostMapping("/novo")
-    public ResponseEntity<?> incluir(@RequestBody Movimentacao movimentacao){
-        try {
-            return new ResponseEntity<Movimentacao>(movimentacaoServices.incluirMovimentacao(movimentacao), HttpStatus.CREATED);
+    @PostMapping("/sacar/{idConta}")
+    public ResponseEntity<ValorResponseDto> sacar(@PathVariable("idConta") int idConta, @RequestBody ValorRequestDto request){
+        return new ResponseEntity<ValorResponseDto>(movimentacaoService.sacar(idConta, request), HttpStatus.OK);
+    }
 
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
+    @PostMapping("/depositar/{idConta}")
+    public ResponseEntity<ValorResponseDto> depositar(@PathVariable("idConta") int idConta, @RequestBody ValorRequestDto request){
+        return new ResponseEntity<ValorResponseDto>(movimentacaoService.depositar(idConta, request), HttpStatus.OK);
+    }
+
+    @PostMapping("/transferir/{idConta}")
+    public ResponseEntity<ValorResponseDto> transferir(@PathVariable("idConta") int idContaOrigem, @RequestBody TransferirRequestDto request){
+        return new ResponseEntity<ValorResponseDto>(movimentacaoService.transferenciaEntreContas(idContaOrigem, request), HttpStatus.OK);
     }
 }

@@ -1,6 +1,7 @@
 package com.avanade.decolatech.fintech.controllers;
 
 import java.util.List;
+
 import com.avanade.decolatech.fintech.models.dtos.responses.ValorResponseDto;
 import com.avanade.decolatech.fintech.models.entities.Conta;
 import com.avanade.decolatech.fintech.models.services.ContaService;
@@ -53,4 +54,5 @@ public class ContaController {
     public ResponseEntity<List<InfoContasResponseDto>> listarClientes(){
     	return new ResponseEntity<List<InfoContasResponseDto>>(contaService.listarContasGerenciamento(), HttpStatus.OK);
     }
+
 }

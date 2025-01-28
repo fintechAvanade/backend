@@ -14,7 +14,7 @@ public class CartaoController {
     private CartaoService cartaoService;
 
     @GetMapping("conta/{id}")
-    public ResponseEntity<CartaoResponseDto> obterCartaoPeloIdConta(@PathVariable("id") int idConta){
+    public ResponseEntity<CartaoResponseDto> buscarCartaoPeloIdConta(@PathVariable("id") int idConta){
         return new ResponseEntity<CartaoResponseDto>(cartaoService.buscarCartaoPeloIdConta(idConta), HttpStatus.OK);
     }
 }

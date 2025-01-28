@@ -23,5 +23,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
    \s""", nativeQuery = true)
     UsuarioResponseDto buscarUsuarioPeloId(@Param("idUsuario") int idUsuario);
 
+    @Query("SELECT u FROM Usuario u WHERE u.username = :username")
+    public Usuario getUserByUsername(@Param("username") String username);
+
     Optional<Usuario> findByNomeUsuario(String username);
 }

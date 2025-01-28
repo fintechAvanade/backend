@@ -28,15 +28,4 @@ public class EnderecoController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
-
-    // Não copiar essa parte
-    @PutMapping("/atualizar")
-    public ResponseEntity<?> atualizar(@RequestBody Endereco endereco){
-        try{
-            return  new ResponseEntity<Endereco>(enderecoService.atualizarEndereco(endereco), HttpStatus.OK);
-        }catch (Exception e ){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
-    }
-
 }
