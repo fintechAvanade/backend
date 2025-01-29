@@ -1,24 +1,15 @@
 package com.avanade.decolatech.fintech.models.services;
 
-import com.avanade.decolatech.fintech.configuration.JwtUtil;
+import com.avanade.decolatech.fintech.utilities.JwtUtil;
 import com.avanade.decolatech.fintech.models.dtos.requests.LoginAdminRequestDto;
 import com.avanade.decolatech.fintech.models.dtos.requests.LoginClienteRequestDto;
-import com.avanade.decolatech.fintech.models.dtos.responses.LoginResponseDto;
 import com.avanade.decolatech.fintech.models.repositories.ContaRepository;
-import com.avanade.decolatech.fintech.models.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.oauth2.jwt.JwtClaimsSet;
-import org.springframework.security.oauth2.jwt.JwtEncoder;
-import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
-
-import java.time.Instant;
 
 @Service
 public class AuthService {

@@ -3,6 +3,7 @@ package com.avanade.decolatech.fintech.models.services;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 import com.avanade.decolatech.fintech.models.dtos.requests.ValorRequestDto;
@@ -12,11 +13,14 @@ import com.avanade.decolatech.fintech.models.entities.Movimentacao;
 import com.avanade.decolatech.fintech.models.entities.Usuario;
 import com.avanade.decolatech.fintech.models.enums.Direcao;
 import com.avanade.decolatech.fintech.models.enums.StatusMovimentacao;
+import com.avanade.decolatech.fintech.models.enums.TipoConta;
 import com.avanade.decolatech.fintech.models.enums.TipoMovimentacao;
 import com.avanade.decolatech.fintech.models.repositories.ContaRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.avanade.decolatech.fintech.models.dtos.responses.InfoContasResponseDto;
@@ -61,5 +65,21 @@ public class ContaService {
     
     public List<InfoContasResponseDto> listarContasGerenciamento(){
     	return contaRepository.listarContasClienteGerenciamento();
+    }
+
+    public Conta criarContaSimples(Usuario usuario){
+        var random = new Random();
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String senha = passwordEncoder.encode(String.valueOf(100000+random.nextInt(900000)));
+
+        var conta = new Conta();
+        conta.setAgencia("0001");
+        conta.setNumeroConta(String.valueOf(1_000_000_000L+random.nextLong(9_000_000_000L)));
+        conta.setSaldo(0);
+        conta.setHashSenhaPagamento(senha);
+        conta.setAtivo(true);
+        conta.setTipoConta(TipoConta.SIMPLES);
+        conta.setUsuario(usuario);
+        return salvarConta(conta);
     }
 }

@@ -3,7 +3,7 @@ package com.avanade.decolatech.fintech.filters;
 import java.io.IOException;
 
 
-import com.avanade.decolatech.fintech.configuration.JwtUtil;
+import com.avanade.decolatech.fintech.utilities.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

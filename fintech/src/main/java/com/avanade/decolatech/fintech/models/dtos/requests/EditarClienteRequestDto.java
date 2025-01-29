@@ -2,9 +2,8 @@ package com.avanade.decolatech.fintech.models.dtos.requests;
 
 import java.util.Date;
 
-public class CriarUsuarioRequestDto {
+public class EditarClienteRequestDto {
     private String nome;
-    private String cpf;
     private Date dataNascimento;
     private String email;
     private String telefone;
@@ -17,13 +16,13 @@ public class CriarUsuarioRequestDto {
     private String estado;
     private int numero;
     private String complemento;
+    private String tipoConta;
 
-    public CriarUsuarioRequestDto() {
+    public EditarClienteRequestDto() {
     }
 
-    public CriarUsuarioRequestDto(String nome, String cpf, Date dataNascimento, String email, String telefone, String nomeUsuario, String senha, String cep, String cidade, String bairro, String logradouro, String estado, int numero, String complemento) {
+    public EditarClienteRequestDto(String nome, Date dataNascimento, String email, String telefone, String nomeUsuario, String senha, String cep, String cidade, String bairro, String logradouro, String estado, int numero, String complemento, String tipoConta) {
         this.setNome(nome);
-        this.setCpf(cpf);
         this.setDataNascimento(dataNascimento);
         this.setEmail(email);
         this.setTelefone(telefone);
@@ -36,6 +35,7 @@ public class CriarUsuarioRequestDto {
         this.setEstado(estado);
         this.setNumero(numero);
         this.setComplemento(complemento);
+        this.setTipoConta(tipoConta);
     }
 
     public String getNome() {
@@ -44,14 +44,6 @@ public class CriarUsuarioRequestDto {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
     }
 
     public Date getDataNascimento() {
@@ -148,5 +140,13 @@ public class CriarUsuarioRequestDto {
 
     public void setComplemento(String complemento) {
         this.complemento = complemento;
+    }
+
+    public String getTipoConta() {
+        return tipoConta;
+    }
+
+    public void setTipoConta(String tipoConta) {
+        this.tipoConta = tipoConta;
     }
 }

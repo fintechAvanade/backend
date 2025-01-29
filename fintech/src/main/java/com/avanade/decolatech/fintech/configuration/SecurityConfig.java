@@ -18,8 +18,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.util.Arrays;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -45,7 +43,8 @@ public class SecurityConfig {
                 auth
                         .requestMatchers(HttpMethod.POST,"/usuarios/login-admin").permitAll()
                         .requestMatchers(HttpMethod.POST,"/usuarios/login-cliente").permitAll()
-                        .requestMatchers(HttpMethod.POST,"/usuarios/novo").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/clientes/novo").permitAll()
+                        .requestMatchers("/swagger-ui/**").permitAll()
                         .anyRequest().authenticated()
         );
 

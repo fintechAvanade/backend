@@ -19,13 +19,4 @@ public class EnderecoController {
     public ResponseEntity<List<Endereco>> lista(){
         return new ResponseEntity<List<Endereco>>(enderecoService.listarEnderecos(), HttpStatus.OK);
     }
-
-    @PostMapping("/novo")
-    public ResponseEntity<?> cadastrar(@RequestBody Endereco endereco){
-        try {
-            return new ResponseEntity<Endereco>(enderecoService.salvarEndereco(endereco), HttpStatus.CREATED);
-        }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
-    }
 }

@@ -1,4 +1,4 @@
-package com.avanade.decolatech.fintech.configuration;
+package com.avanade.decolatech.fintech.utilities;
 
 import java.security.Key;
 import java.util.Date;
