@@ -2,14 +2,12 @@ package com.avanade.decolatech.fintech.models.dtos.responses;
 
 public class LoginResponseDto {
     private String accessToken;
-    private Long expiresIn;
 
     public LoginResponseDto() {
     }
 
-    public LoginResponseDto(String accessToken, Long expiresIn) {
+    public LoginResponseDto(String accessToken) {
         this.setAccessToken(accessToken);
-        this.setExpiresIn(expiresIn);
     }
 
     public String getAccessToken() {
@@ -18,13 +16,5 @@ public class LoginResponseDto {
 
     public void setAccessToken(String accessToken) {
         this.accessToken = accessToken;
-    }
-
-    public Long getExpiresIn() {
-        return expiresIn;
-    }
-
-    public void setExpiresIn(Long expiresIn) {
-        this.expiresIn = expiresIn;
     }
 }

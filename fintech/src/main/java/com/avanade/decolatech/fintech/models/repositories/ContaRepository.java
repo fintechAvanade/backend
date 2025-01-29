@@ -14,7 +14,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface ContaRepository extends JpaRepository<Conta, Integer> {
 
-    Optional<Conta> findByAgenciaAndNumeroConta(String agencia, String numeroConta);
+    Conta findByAgenciaAndNumeroConta(String agencia, String numeroConta);
 
     Optional<Conta> findByUsuario(Usuario usuario);
 

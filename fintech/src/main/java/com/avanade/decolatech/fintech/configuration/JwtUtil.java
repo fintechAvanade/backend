@@ -7,6 +7,8 @@ import java.util.Date;
 import javax.crypto.SecretKey;
 
 
+import com.avanade.decolatech.fintech.models.repositories.UsuarioRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -20,6 +22,8 @@ import io.jsonwebtoken.security.Keys;
 @Component
 public class JwtUtil {
 
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     @Value("${app.jwt-secret}")
     private String jwtSecret;
@@ -57,23 +61,22 @@ public class JwtUtil {
 
     public String generateToken(Authentication authentication){
 
-
         String username = authentication.getName();
 
+        var usuario = usuarioRepository.getUserByUsername(username);
 
         Date currentDate = new Date();
 
-
         Date expireDate = new Date(currentDate.getTime() + jwtExpirationDate);
-
 
         String token = Jwts.builder()
                 .subject(username)
+                .claim("id", usuario.getId())
+                .claim("role", usuario.getTipoUsuario())
                 .issuedAt(new Date())
                 .expiration(expireDate)
                 .signWith(key())
                 .compact();
-
 
         return token;
     }
