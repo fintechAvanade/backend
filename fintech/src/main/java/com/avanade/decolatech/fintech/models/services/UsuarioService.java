@@ -2,6 +2,7 @@ package com.avanade.decolatech.fintech.models.services;
 
 import com.avanade.decolatech.fintech.models.dtos.requests.CriarClienteRequestDto;
 import com.avanade.decolatech.fintech.models.dtos.requests.EditarClienteRequestDto;
+import com.avanade.decolatech.fintech.models.dtos.responses.UsuarioResponseDto;
 import com.avanade.decolatech.fintech.models.entities.Endereco;
 import com.avanade.decolatech.fintech.models.entities.Usuario;
 import com.avanade.decolatech.fintech.models.enums.TipoUsuario;
@@ -26,6 +27,10 @@ public class UsuarioService implements UserDetailsService {
 
     public Usuario buscarUsuarioPorId(int idUsuario){
         return usuarioRepository.getReferenceById(idUsuario);
+    }
+
+    public UsuarioResponseDto buscarUsuarioResponsePorId(int idUsuario){
+        return usuarioRepository.buscarUsuarioPeloId(idUsuario);
     }
 
     @Override

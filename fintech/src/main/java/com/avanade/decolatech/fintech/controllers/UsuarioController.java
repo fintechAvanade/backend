@@ -3,6 +3,7 @@ package com.avanade.decolatech.fintech.controllers;
 import com.avanade.decolatech.fintech.models.dtos.requests.LoginAdminRequestDto;
 import com.avanade.decolatech.fintech.models.dtos.requests.LoginClienteRequestDto;
 import com.avanade.decolatech.fintech.models.dtos.responses.LoginResponseDto;
+import com.avanade.decolatech.fintech.models.dtos.responses.UsuarioResponseDto;
 import com.avanade.decolatech.fintech.models.services.AuthService;
 import com.avanade.decolatech.fintech.models.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +22,10 @@ public class UsuarioController {
     private AuthService authService;
 
 
-//    @GetMapping("/{idUsuario}")
-//    public ResponseEntity<UsuarioResponseDto> obterUsuarioPorId(@PathVariable("idUsuario") int idUsuario){
-//        return new ResponseEntity<UsuarioResponseDto>(service.buscarUsuarioPorId(idUsuario), HttpStatus.OK);
-//    }
+    @GetMapping("/{idUsuario}")
+    public ResponseEntity<UsuarioResponseDto> obterUsuarioPorId(@PathVariable("idUsuario") int idUsuario){
+        return new ResponseEntity<UsuarioResponseDto>(service.buscarUsuarioResponsePorId(idUsuario), HttpStatus.OK);
+    }
 
     @PostMapping("/login-admin")
     public ResponseEntity<LoginResponseDto> loginAdmin(@RequestBody LoginAdminRequestDto request){
@@ -42,7 +43,7 @@ public class UsuarioController {
     }
 
     @PostMapping("/login-cliente")
-    public ResponseEntity<LoginResponseDto> loginCliente(@RequestBody LoginClienteRequestDto request){
+    public ResponseEntity<LoginResponseDto> loginCliente(@RequestBody LoginClienteRequestDto request) {
         try {
             String token = authService.login(request);
 
@@ -55,15 +56,4 @@ public class UsuarioController {
             throw new RuntimeException(e);
         }
     }
-
-//    @PutMapping("/desativar/{idUsuario}")
-//    public ResponseEntity<String> desativarUsuario(@PathVariable("idUsuario") int idUsuario){
-//        return new ResponseEntity<String>(service.alterarEstadoUsuario(idUsuario, false), HttpStatus.ACCEPTED);
-//    }
-//
-//    @PutMapping("/ativar/{idUsuario}")
-//    public ResponseEntity<String> ativarUsuario(@PathVariable("idUsuario") int idUsuario){
-//        return new ResponseEntity<String>(service.alterarEstadoUsuario(idUsuario, true), HttpStatus.ACCEPTED);
-//    }
-
 }
