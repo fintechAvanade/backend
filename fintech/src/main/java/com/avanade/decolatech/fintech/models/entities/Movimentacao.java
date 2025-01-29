@@ -51,6 +51,22 @@ public class Movimentacao {
     @Column(name = "VALOR_TOTAL")
     private double valorTotalMovimentacao;
 
+    public Movimentacao() {
+    }
+
+    public Movimentacao(String codigoMovimentacao, StatusMovimentacao status, Conta conta, TipoMovimentacao tipoMovimentacao, Direcao direcao, Date dataMovimentacao, String descricao, double valorMovimentacao, double percentualTaxa, double valorTotalMovimentacao) {
+        this.setCodigoMovimentacao(codigoMovimentacao);
+        this.setStatus(status);
+        this.setConta(conta);
+        this.setTipoMovimentacao(tipoMovimentacao);
+        this.setDirecao(direcao);
+        this.setDataMovimentacao(dataMovimentacao);
+        this.setDescricao(descricao);
+        this.setValorMovimentacao(valorMovimentacao);
+        this.setPercentualTaxa(percentualTaxa);
+        this.setValorTotalMovimentacao(valorTotalMovimentacao);
+    }
+
     public int getId() {
         return id;
     }

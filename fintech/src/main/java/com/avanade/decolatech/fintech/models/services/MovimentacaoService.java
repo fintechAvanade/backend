@@ -109,40 +109,60 @@ public class MovimentacaoService {
 
 
     public ValorResponseDto transferenciaEntreContas(int idContaOrigem, TransferirRequestDto request) {
+        if(request.getValor()<=0) throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
+
         var origem = contaService.buscarContaPeloId(idContaOrigem);
+
+        if(origem.getSaldo() < request.getValor()) throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
+
         var destino = contaService.buscarContaPeloId(request.getDestino());
+
+        if(destino==null || !destino.isAtivo()) throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
 
         var codigoMovimentacao = String.valueOf(UUID.randomUUID());
         var data = Date.from(Instant.now());
+        var taxa = 0.02;
+        var valorTotal = request.getValor()+(request.getValor() * taxa);
 
-        var movimentacaoOrigem = new Movimentacao();
-        movimentacaoOrigem.setConta(origem);
-        movimentacaoOrigem.setCodigoMovimentacao(codigoMovimentacao);
-        movimentacaoOrigem.setStatus(StatusMovimentacao.PENDENTE);
-        movimentacaoOrigem.setTipoMovimentacao(TipoMovimentacao.TRANSFERENCIA);
-        movimentacaoOrigem.setDataMovimentacao(data);
-        movimentacaoOrigem.setDirecao(Direcao.CREDITO);
-        movimentacaoOrigem.setDescricao(request.getDescricao());
-        movimentacaoOrigem.setValorMovimentacao(request.getValor());
-        movimentacaoOrigem.setPercentualTaxa(0.02);
-        movimentacaoOrigem.setValorTotalMovimentacao(request.getValor() * movimentacaoOrigem.getPercentualTaxa());
+        var movimentacaoOrigem = new Movimentacao(
+                codigoMovimentacao,
+                StatusMovimentacao.PENDENTE,
+                origem,
+                TipoMovimentacao.TRANSFERENCIA,
+                Direcao.CREDITO,
+                data,
+                request.getDescricao(),
+                request.getValor(),
+                taxa,
+                valorTotal);
+
+        var movimentacaoDestino = new Movimentacao(
+                codigoMovimentacao,
+                StatusMovimentacao.PENDENTE,
+                destino,
+                TipoMovimentacao.TRANSFERENCIA,
+                Direcao.DEBITO,
+                data,
+                request.getDescricao(),
+                request.getValor(),
+                taxa,
+                valorTotal);
 
         var movimentacaoOrigemDb = this.salvarMovimentacao(movimentacaoOrigem);
+        var movimentacaoDestinoDb = this.salvarMovimentacao(movimentacaoDestino);
 
-        var movimentacaoDestino = new Movimentacao();
-        movimentacaoDestino.setConta(origem);
-        movimentacaoDestino.setCodigoMovimentacao(String.valueOf(UUID.randomUUID()));
-        movimentacaoDestino.setStatus(StatusMovimentacao.PENDENTE);
-        movimentacaoDestino.setTipoMovimentacao(TipoMovimentacao.SAQUE);
-        movimentacaoDestino.setDataMovimentacao(Date.from(Instant.now()));
-        movimentacaoDestino.setDirecao(Direcao.CREDITO);
-        movimentacaoDestino.setDescricao(request.getDescricao());
-        movimentacaoDestino.setValorMovimentacao(request.getValor());
-        movimentacaoDestino.setPercentualTaxa(0.02);
-        movimentacaoDestino.setValorTotalMovimentacao(request.getValor());
+        origem.setSaldo(origem.getSaldo()-valorTotal);
+        destino.setSaldo(destino.getSaldo()+valorTotal);
 
-        var movimentacaoDestinoDb = this.salvarMovimentacao(movimentacaoOrigem);
+        contaService.salvarConta(origem);
+        contaService.salvarConta(destino);
 
-        throw new NotImplementedException();
+        movimentacaoOrigemDb.setStatus(StatusMovimentacao.SUCESSO);
+        movimentacaoDestinoDb.setStatus(StatusMovimentacao.SUCESSO);
+
+        this.salvarMovimentacao(movimentacaoOrigem);
+        this.salvarMovimentacao(movimentacaoDestino);
+
+        return new ValorResponseDto(valorTotal);
     }
 }

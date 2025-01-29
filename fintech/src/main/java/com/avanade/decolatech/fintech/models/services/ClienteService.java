@@ -2,6 +2,7 @@ package com.avanade.decolatech.fintech.models.services;
 
 import com.avanade.decolatech.fintech.models.dtos.requests.CriarClienteRequestDto;
 import com.avanade.decolatech.fintech.models.dtos.requests.EditarClienteRequestDto;
+import com.avanade.decolatech.fintech.models.dtos.responses.EditarClienteResponseDto;
 import com.avanade.decolatech.fintech.models.dtos.responses.InfoContasResponseDto;
 import com.avanade.decolatech.fintech.models.entities.Conta;
 import com.avanade.decolatech.fintech.models.enums.TipoConta;
@@ -34,6 +35,10 @@ public class ClienteService {
 
     public List<InfoContasResponseDto> listarContas(){
         return contaService.listarContasAdmin();
+    }
+
+    public EditarClienteResponseDto buscarClientePorId(int idUsuario){
+        return usuarioService.buscarUsuarioEnderecoPorId(idUsuario);
     }
 
     @Transactional

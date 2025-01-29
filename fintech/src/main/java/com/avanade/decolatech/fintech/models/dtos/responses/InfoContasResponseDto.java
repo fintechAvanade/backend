@@ -7,15 +7,17 @@ public class InfoContasResponseDto {
 	private String agencia;
 	private String numeroConta;
 	private String nome;
+	private String cpf;
 	private Date ultimaMovimentacao;
 	private Date ultimoAcesso;
 	private boolean ativo;
 
-	public InfoContasResponseDto(int id, String agencia, String numeroConta, String nome, Date ultimaMovimentacao, Date ultimoAcesso, boolean ativo) {
+	public InfoContasResponseDto(int id, String agencia, String numeroConta, String nome, String cpf, Date ultimaMovimentacao, Date ultimoAcesso, boolean ativo) {
 		this.setId(id);
 		this.setAgencia(agencia);
 		this.setNumeroConta(numeroConta);
 		this.setNome(nome);
+		this.setCpf(cpf);
 		this.setUltimaMovimentacao(ultimaMovimentacao);
 		this.setUltimoAcesso(ultimoAcesso);
 		this.setAtivo(ativo);
@@ -51,6 +53,18 @@ public class InfoContasResponseDto {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public boolean isAtivo() {
+		return ativo;
 	}
 
 	public Date getUltimaMovimentacao() {

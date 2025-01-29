@@ -3,9 +3,7 @@ package com.avanade.decolatech.fintech.controllers;
 import com.avanade.decolatech.fintech.models.dtos.requests.CriarClienteRequestDto;
 import com.avanade.decolatech.fintech.models.dtos.requests.EditarClienteRequestDto;
 import com.avanade.decolatech.fintech.models.dtos.requests.LoginClienteRequestDto;
-import com.avanade.decolatech.fintech.models.dtos.responses.InfoContasResponseDto;
-import com.avanade.decolatech.fintech.models.dtos.responses.LoginResponseDto;
-import com.avanade.decolatech.fintech.models.dtos.responses.MensagemResponseDto;
+import com.avanade.decolatech.fintech.models.dtos.responses.*;
 import com.avanade.decolatech.fintech.models.services.AuthService;
 import com.avanade.decolatech.fintech.models.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,18 +30,26 @@ public class ClienteController {
         return new ResponseEntity<List<InfoContasResponseDto>>(service.listarContas(), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+    @GetMapping("{idUsuario}")
+    public ResponseEntity<EditarClienteResponseDto> buscarCliente(@PathVariable("idUsuario") int idUsuario){
+        return new ResponseEntity<EditarClienteResponseDto>(service.buscarClientePorId(idUsuario), HttpStatus.OK);
+    }
 
     @PostMapping("/novo")
-    public ResponseEntity<LoginResponseDto> cadastrarUsuario(@RequestBody CriarClienteRequestDto request){
+    public ResponseEntity<CriarClienteResponseDto> cadastrarUsuario(@RequestBody CriarClienteRequestDto request){
         try {
             var conta = service.cadastrarCliente(request);
 
             String token = authService.login(new LoginClienteRequestDto(conta.getAgencia(), conta.getNumeroConta(), request.getSenha()));
 
-            var authResponse = new LoginResponseDto();
-            authResponse.setAccessToken(token);
+            var response = new CriarClienteResponseDto();
+            response.setAccessToken(token);
+            response.setAgencia(conta.getAgencia());
+            response.setConta(conta.getNumeroConta());
+            response.setSenhaPagamento(conta.getSenhaPagamento());
 
-            return new ResponseEntity<>(authResponse, HttpStatus.OK);
+            return new ResponseEntity<CriarClienteResponseDto>(response, HttpStatus.OK);
 
         } catch (Exception e) {
             throw new RuntimeException(e);

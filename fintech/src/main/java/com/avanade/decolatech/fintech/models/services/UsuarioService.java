@@ -2,6 +2,7 @@ package com.avanade.decolatech.fintech.models.services;
 
 import com.avanade.decolatech.fintech.models.dtos.requests.CriarClienteRequestDto;
 import com.avanade.decolatech.fintech.models.dtos.requests.EditarClienteRequestDto;
+import com.avanade.decolatech.fintech.models.dtos.responses.EditarClienteResponseDto;
 import com.avanade.decolatech.fintech.models.dtos.responses.UsuarioResponseDto;
 import com.avanade.decolatech.fintech.models.entities.Endereco;
 import com.avanade.decolatech.fintech.models.entities.Usuario;
@@ -17,6 +18,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.*;
 
 @Service
@@ -31,6 +33,18 @@ public class UsuarioService implements UserDetailsService {
 
     public UsuarioResponseDto buscarUsuarioResponsePorId(int idUsuario){
         return usuarioRepository.buscarUsuarioPeloId(idUsuario);
+    }
+
+    public EditarClienteResponseDto buscarUsuarioEnderecoPorId(int idUsuario){
+        return usuarioRepository.buscarUsuarioEnderecoPorId(idUsuario);
+    }
+
+    public void atualizarDataAcesso(String nomeUsuario){
+        var usuario = usuarioRepository.getUserByUsername(nomeUsuario);
+
+        usuario.setDataUltimoAcesso(Date.from(Instant.now()));
+
+        salvarUsuario(usuario);
     }
 
     @Override

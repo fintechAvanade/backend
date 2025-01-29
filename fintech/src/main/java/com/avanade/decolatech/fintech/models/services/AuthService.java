@@ -20,7 +20,10 @@ public class AuthService {
     private JwtUtil jwtUtil;
 
     @Autowired
-    ContaRepository contaRepository;
+    private ContaRepository contaRepository;
+
+    @Autowired
+    private UsuarioService usuarioService;
 
     public String login(LoginAdminRequestDto request) {
 
@@ -30,6 +33,8 @@ public class AuthService {
         ));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        usuarioService.atualizarDataAcesso(request.getUsuario());
 
         String token = jwtUtil.generateToken(authentication);
 

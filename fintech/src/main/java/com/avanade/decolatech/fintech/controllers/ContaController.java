@@ -39,13 +39,4 @@ public class ContaController {
     public ResponseEntity<ValorResponseDto> obterSaidas(@PathVariable("id") int idConta){
         return new ResponseEntity<ValorResponseDto>(contaService.obterEntradas(idConta), HttpStatus.OK);
     }
-
-    @PostMapping("/novo")
-    public ResponseEntity<?> incluir(@RequestBody Conta conta){
-        try{
-            return new ResponseEntity<Conta>(contaService.salvarConta(conta), HttpStatus.CREATED);
-        }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
-    }
 }

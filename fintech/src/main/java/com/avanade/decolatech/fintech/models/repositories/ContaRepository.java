@@ -24,15 +24,34 @@ public interface ContaRepository extends JpaRepository<Conta, Integer> {
                 C.AGENCIA AS agencia,
                 C.NUMERO_CONTA AS numeroConta,
             	U.NOME AS nome,
+            	U.CPF AS cpf,
                 M.DATA_HORA AS ultimaMovimentacao,
                 U.DATA_ULTIMO_ACESSO AS ultimoAcesso,
                 C.ATIVO AS ativo
-            FROM\s
+            FROM
                 TB_USUARIO U
                 INNER JOIN TB_CONTA C ON U.ID = C.ID_USUARIO
-                INNER JOIN TB_MOVIMENTACAO M ON C.ID = M.ID_CONTA
-            WHERE\s
+                FULL JOIN TB_MOVIMENTACAO M ON C.ID = M.ID_CONTA
+            WHERE
                 M.DATA_HORA = (SELECT MAX(DATA_HORA) FROM TB_MOVIMENTACAO WHERE ID_CONTA = C.ID)
+            
+            UNION
+            
+            SELECT
+            	C.ID AS id,
+                C.AGENCIA AS agencia,
+                C.NUMERO_CONTA AS numeroConta,
+            	U.NOME AS nome,
+            	U.CPF AS cpf,
+                M.DATA_HORA AS ultimaMovimentacao,
+                U.DATA_ULTIMO_ACESSO AS ultimoAcesso,
+                C.ATIVO AS ativo
+            FROM
+                TB_USUARIO U
+                INNER JOIN TB_CONTA C ON U.ID = C.ID_USUARIO
+                FULL JOIN TB_MOVIMENTACAO M ON C.ID = M.ID_CONTA
+            WHERE\s
+                M.DATA_HORA IS NULL
             """, nativeQuery = true)
     List<InfoContasResponseDto> listarContas();
 

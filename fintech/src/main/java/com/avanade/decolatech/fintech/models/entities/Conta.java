@@ -1,6 +1,7 @@
 package com.avanade.decolatech.fintech.models.entities;
 
 import com.avanade.decolatech.fintech.models.enums.TipoConta;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -42,6 +43,9 @@ public class Conta {
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "conta")
 	private List<ContaInvestimento> contasInvestimentos;
+
+	@Transient
+	private String senhaPagamento;
 
 	public int getId() {
 		return id;
@@ -121,5 +125,13 @@ public class Conta {
 
 	public void setContasInvestimentos(List<ContaInvestimento> contasInvestimentos) {
 		this.contasInvestimentos = contasInvestimentos;
+	}
+
+	public String getSenhaPagamento() {
+		return senhaPagamento;
+	}
+
+	public void setSenhaPagamento(String senhaPagamento) {
+		this.senhaPagamento = senhaPagamento;
 	}
 }

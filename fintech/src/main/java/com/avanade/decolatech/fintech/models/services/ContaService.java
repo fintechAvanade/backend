@@ -59,16 +59,19 @@ public class ContaService {
     public Conta criarContaSimples(Usuario usuario){
         var random = new Random();
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String senha = passwordEncoder.encode(String.valueOf(100000+random.nextInt(900000)));
+
+        var senhaPagamento = String.valueOf(100000+random.nextInt(900000));
+        String hashSenhaPagamento = passwordEncoder.encode(senhaPagamento);
 
         var conta = new Conta();
         conta.setAgencia("0001");
         conta.setNumeroConta(String.valueOf(1_000_000_000L+random.nextLong(9_000_000_000L)));
         conta.setSaldo(0);
-        conta.setHashSenhaPagamento(senha);
+        conta.setHashSenhaPagamento(hashSenhaPagamento);
         conta.setAtivo(true);
         conta.setTipoConta(TipoConta.SIMPLES);
         conta.setUsuario(usuario);
+        conta.setSenhaPagamento(senhaPagamento);
         return salvarConta(conta);
     }
 }
