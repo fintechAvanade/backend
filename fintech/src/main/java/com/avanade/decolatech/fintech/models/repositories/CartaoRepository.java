@@ -23,7 +23,7 @@ public interface CartaoRepository extends JpaRepository<Cartao, Integer> {
             FROM TB_CARTAO C1\s
             INNER JOIN TB_CONTA AS C2 ON C1.ID_CONTA = C2.ID
             INNER JOIN TB_USUARIO U ON C2.ID_USUARIO = U.ID
-            WHERE C1.ATIVO = 1 AND C1.ID_CONTA = :idConta
+            WHERE C1.ATIVO = 1 AND U.ID = :idUsuario
             """, nativeQuery = true)
-    CartaoResponseDto buscarCartaoPeloIdConta(@Param("idConta") int idConta);
+    List<CartaoResponseDto> buscarCartaoPeloIdUsuario(@Param("idUsuario") int idUsuario);
 }

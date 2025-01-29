@@ -24,6 +24,10 @@ public class ContaService {
         return contaRepository.getReferenceById(idConta);
     }
 
+    public Conta buscarContaPelaAgenciaENumeroConta(String agencia, String numeroConta){
+        return contaRepository.findByAgenciaAndNumeroConta(agencia, numeroConta);
+    }
+
     public List<Conta> listarContas(){
         return contaRepository.findAll();
     }

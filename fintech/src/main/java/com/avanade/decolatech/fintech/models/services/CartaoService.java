@@ -22,8 +22,8 @@ public class CartaoService {
         return cartaoRepository.findAllByConta(conta);
     }
 
-    public CartaoResponseDto buscarCartaoPeloIdConta(int idConta){
-        return cartaoRepository.buscarCartaoPeloIdConta(idConta);
+    public List<CartaoResponseDto> buscarCartoesPeloIdUsuario(int idUsuario){
+        return cartaoRepository.buscarCartaoPeloIdUsuario(idUsuario);
     }
 
     public Cartao salvarCartao(Cartao cartao){

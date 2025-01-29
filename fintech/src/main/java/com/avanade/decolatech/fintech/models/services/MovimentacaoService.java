@@ -1,6 +1,6 @@
 package com.avanade.decolatech.fintech.models.services;
 
-
+import com.avanade.decolatech.fintech.models.dtos.requests.PagarComCodigoRequestDto;
 import com.avanade.decolatech.fintech.models.dtos.requests.TransferirRequestDto;
 import com.avanade.decolatech.fintech.models.dtos.requests.ValorRequestDto;
 import com.avanade.decolatech.fintech.models.dtos.responses.MovimentacoesResponseDto;
@@ -11,7 +11,6 @@ import com.avanade.decolatech.fintech.models.enums.StatusMovimentacao;
 import com.avanade.decolatech.fintech.models.enums.TipoMovimentacao;
 import com.avanade.decolatech.fintech.models.repositories.MovimentacaoRepository;
 import jakarta.transaction.Transactional;
-import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -108,6 +107,7 @@ public class MovimentacaoService {
     }
 
 
+    @Transactional
     public ValorResponseDto transferenciaEntreContas(int idContaOrigem, TransferirRequestDto request) {
         if(request.getValor()<=0) throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
 
@@ -115,7 +115,7 @@ public class MovimentacaoService {
 
         if(origem.getSaldo() < request.getValor()) throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
 
-        var destino = contaService.buscarContaPeloId(request.getDestino());
+        var destino = contaService.buscarContaPelaAgenciaENumeroConta(request.getAgencia(), request.getConta());
 
         if(destino==null || !destino.isAtivo()) throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
 
@@ -165,4 +165,43 @@ public class MovimentacaoService {
 
         return new ValorResponseDto(valorTotal);
     }
+
+    @Transactional
+    public ValorResponseDto pagarComCodigo(int idConta, PagarComCodigoRequestDto request) {
+        if(request.getValor()<=0) throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
+
+        var conta = contaService.buscarContaPeloId(idConta);
+
+        if(conta.getSaldo() < request.getValor()) throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
+
+        var codigoMovimentacao = request.getCodigo();
+        var data = Date.from(Instant.now());
+        var taxa = 0;
+        var valorTotal = request.getValor()+(request.getValor() * taxa);
+
+        var movimentacao = new Movimentacao(
+                codigoMovimentacao,
+                StatusMovimentacao.PENDENTE,
+                conta,
+                TipoMovimentacao.PAGAMENTO_BOLETO,
+                Direcao.CREDITO,
+                data,
+                request.getDescricao(),
+                request.getValor(),
+                taxa,
+                valorTotal);
+
+        var movimentacaoDb = this.salvarMovimentacao(movimentacao);
+
+        conta.setSaldo(conta.getSaldo()-valorTotal);
+
+        contaService.salvarConta(conta);
+
+        movimentacaoDb.setStatus(StatusMovimentacao.SUCESSO);
+
+        this.salvarMovimentacao(movimentacao);
+
+        return new ValorResponseDto(valorTotal);
+    }
+
 }

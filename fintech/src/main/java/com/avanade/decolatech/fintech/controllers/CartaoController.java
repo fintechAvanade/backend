@@ -7,14 +7,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/cartoes")
 public class CartaoController {
     @Autowired
     private CartaoService cartaoService;
 
-    @GetMapping("conta/{id}")
-    public ResponseEntity<CartaoResponseDto> buscarCartaoPeloIdConta(@PathVariable("id") int idConta){
-        return new ResponseEntity<CartaoResponseDto>(cartaoService.buscarCartaoPeloIdConta(idConta), HttpStatus.OK);
+    @GetMapping("usuario/{idUsuario}")
+    public ResponseEntity<List<CartaoResponseDto>> buscarCartaoPeloIdUsuario(@PathVariable("idUsuario") int idUsuario){
+        return new ResponseEntity<List<CartaoResponseDto>>(cartaoService.buscarCartoesPeloIdUsuario(idUsuario), HttpStatus.OK);
     }
 }

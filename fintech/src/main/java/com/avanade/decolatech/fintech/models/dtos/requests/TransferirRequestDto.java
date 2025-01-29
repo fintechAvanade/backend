@@ -1,14 +1,32 @@
 package com.avanade.decolatech.fintech.models.dtos.requests;
 
 public class TransferirRequestDto {
+    private String agencia;
+    private String conta;
     private double valor;
-    private int destino;
     private String descricao;
 
-    public TransferirRequestDto(double valor, int destino, String descricao) {
+    public TransferirRequestDto(String agencia, String conta, double valor, String descricao) {
+        this.setAgencia(agencia);
+        this.setConta(conta);
         this.setValor(valor);
-        this.setDestino(destino);
         this.setDescricao(descricao);
+    }
+
+    public String getAgencia() {
+        return agencia;
+    }
+
+    public void setAgencia(String agencia) {
+        this.agencia = agencia;
+    }
+
+    public String getConta() {
+        return conta;
+    }
+
+    public void setConta(String conta) {
+        this.conta = conta;
     }
 
     public double getValor() {
@@ -17,14 +35,6 @@ public class TransferirRequestDto {
 
     public void setValor(double valor) {
         this.valor = valor;
-    }
-
-    public int getDestino() {
-        return destino;
-    }
-
-    public void setDestino(int destino) {
-        this.destino = destino;
     }
 
     public String getDescricao() {
