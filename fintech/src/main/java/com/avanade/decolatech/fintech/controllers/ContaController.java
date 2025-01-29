@@ -48,11 +48,4 @@ public class ContaController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
-
-    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
-    @GetMapping("/clientes")
-    public ResponseEntity<List<InfoContasResponseDto>> listarClientes(){
-    	return new ResponseEntity<List<InfoContasResponseDto>>(contaService.listarContasGerenciamento(), HttpStatus.OK);
-    }
-
 }

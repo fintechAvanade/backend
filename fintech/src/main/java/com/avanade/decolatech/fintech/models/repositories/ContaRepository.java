@@ -34,7 +34,7 @@ public interface ContaRepository extends JpaRepository<Conta, Integer> {
             WHERE\s
                 M.DATA_HORA = (SELECT MAX(DATA_HORA) FROM TB_MOVIMENTACAO WHERE ID_CONTA = C.ID)
             """, nativeQuery = true)
-    List<InfoContasResponseDto> listarContasClienteGerenciamento();
+    List<InfoContasResponseDto> listarContas();
 
     @Query(value = "SELECT C.SALDO AS [valor] FROM TB_CONTA C WHERE C.ID = :id", nativeQuery = true)
     ValorResponseDto obterSaldo(@Param("id") int id);

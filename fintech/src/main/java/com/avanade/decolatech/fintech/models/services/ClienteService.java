@@ -2,6 +2,7 @@ package com.avanade.decolatech.fintech.models.services;
 
 import com.avanade.decolatech.fintech.models.dtos.requests.CriarClienteRequestDto;
 import com.avanade.decolatech.fintech.models.dtos.requests.EditarClienteRequestDto;
+import com.avanade.decolatech.fintech.models.dtos.responses.InfoContasResponseDto;
 import com.avanade.decolatech.fintech.models.entities.Conta;
 import com.avanade.decolatech.fintech.models.enums.TipoConta;
 import jakarta.transaction.Transactional;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 @Service
 public class ClienteService {
@@ -27,6 +30,11 @@ public class ClienteService {
 
     @Autowired
     private ChavePixService chavePixService;
+
+
+    public List<InfoContasResponseDto> listarContas(){
+        return contaService.listarContasAdmin();
+    }
 
     @Transactional
     public Conta cadastrarCliente(CriarClienteRequestDto request) {
