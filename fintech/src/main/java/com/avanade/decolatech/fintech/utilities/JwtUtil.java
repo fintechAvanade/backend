@@ -7,6 +7,7 @@ import java.util.Date;
 import javax.crypto.SecretKey;
 
 
+import com.avanade.decolatech.fintech.models.enums.TipoUsuario;
 import com.avanade.decolatech.fintech.models.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -69,16 +70,20 @@ public class JwtUtil {
 
         Date expireDate = new Date(currentDate.getTime() + jwtExpirationDate);
 
-        String token = Jwts.builder()
+        var tokenBuilder = Jwts.builder()
                 .subject(username)
                 .claim("id", usuario.getId())
-                .claim("role", usuario.getTipoUsuario())
+                .claim("role", usuario.getTipoUsuario().toString())
                 .issuedAt(new Date())
                 .expiration(expireDate)
-                .signWith(key())
+                .signWith(key());
+
+        if(usuario.getTipoUsuario() == TipoUsuario.CLIENTE)
+            return tokenBuilder
+                .claim("contaId", usuario.getContas().getFirst().getId())
                 .compact();
 
-        return token;
+        return tokenBuilder.compact();
     }
 }
 

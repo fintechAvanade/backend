@@ -44,6 +44,10 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST,"/usuarios/login-admin").permitAll()
                         .requestMatchers(HttpMethod.POST,"/usuarios/login-cliente").permitAll()
                         .requestMatchers(HttpMethod.POST,"/clientes/novo").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/clientes/listar").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/clientes/{idUsuario}").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "clientes/ativar/{idUsuario}").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "clientes/desativar/{idUsuario}").hasAuthority("ADMIN")
                         .requestMatchers("/swagger-ui/**").permitAll()
                         .anyRequest().authenticated()
         );

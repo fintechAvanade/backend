@@ -19,12 +19,6 @@ public class ContaController {
     @Autowired
     private ContaService contaService;
 
-    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
-    @GetMapping("/lista")
-    public ResponseEntity<List<Conta>> listar(){
-        return new ResponseEntity<List<Conta>>(contaService.listarContas(), HttpStatus.OK);
-    }
-
     @GetMapping("{id}/saldo")
     public ResponseEntity<ValorResponseDto> obterSaldoAtual(@PathVariable("id") int idConta){
         return new ResponseEntity<ValorResponseDto>(contaService.obterSaldoAtual(idConta), HttpStatus.OK);

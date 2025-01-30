@@ -20,7 +20,7 @@ public interface ContaRepository extends JpaRepository<Conta, Integer> {
 
     @Query(value = """
             SELECT
-            	C.ID AS id,
+            	U.ID AS id,
                 C.AGENCIA AS agencia,
                 C.NUMERO_CONTA AS numeroConta,
             	U.NOME AS nome,
@@ -38,7 +38,7 @@ public interface ContaRepository extends JpaRepository<Conta, Integer> {
             UNION
             
             SELECT
-            	C.ID AS id,
+            	U.ID AS id,
                 C.AGENCIA AS agencia,
                 C.NUMERO_CONTA AS numeroConta,
             	U.NOME AS nome,

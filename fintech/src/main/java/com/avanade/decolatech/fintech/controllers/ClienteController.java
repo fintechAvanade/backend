@@ -24,14 +24,14 @@ public class ClienteController {
     @Autowired
     private AuthService authService;
 
-    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
-    @GetMapping("listar")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @GetMapping("/listar")
     public ResponseEntity<List<InfoContasResponseDto>> listarClientes(){
         return new ResponseEntity<List<InfoContasResponseDto>>(service.listarContas(), HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
-    @GetMapping("{idUsuario}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @GetMapping("/{idUsuario}")
     public ResponseEntity<EditarClienteResponseDto> buscarCliente(@PathVariable("idUsuario") int idUsuario){
         return new ResponseEntity<EditarClienteResponseDto>(service.buscarClientePorId(idUsuario), HttpStatus.OK);
     }
