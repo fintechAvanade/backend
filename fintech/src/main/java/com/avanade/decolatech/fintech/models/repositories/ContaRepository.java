@@ -3,6 +3,7 @@ package com.avanade.decolatech.fintech.models.repositories;
 import java.util.List;
 import java.util.Optional;
 
+import com.avanade.decolatech.fintech.models.dtos.responses.ContaResponseDto;
 import com.avanade.decolatech.fintech.models.dtos.responses.ValorResponseDto;
 import com.avanade.decolatech.fintech.models.entities.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,7 +17,7 @@ public interface ContaRepository extends JpaRepository<Conta, Integer> {
 
     Conta findByAgenciaAndNumeroConta(String agencia, String numeroConta);
 
-    Optional<Conta> findByUsuario(Usuario usuario);
+    Conta findByUsuario(Usuario usuario);
 
     @Query(value = """
             SELECT
@@ -54,6 +55,15 @@ public interface ContaRepository extends JpaRepository<Conta, Integer> {
                 M.DATA_HORA IS NULL
             """, nativeQuery = true)
     List<InfoContasResponseDto> listarContas();
+
+    @Query(value = """
+            SELECT
+                C.AGENCIA AS agencia,
+                C.NUMERO_CONTA AS numeroConta,
+                C.TIPO_CONTA AS tipoConta
+            FROM TB_CONTA C WHERE C.ID = :id
+            """, nativeQuery = true)
+    ContaResponseDto buscarConta(@Param("id") int id);
 
     @Query(value = "SELECT C.SALDO AS [valor] FROM TB_CONTA C WHERE C.ID = :id", nativeQuery = true)
     ValorResponseDto obterSaldo(@Param("id") int id);

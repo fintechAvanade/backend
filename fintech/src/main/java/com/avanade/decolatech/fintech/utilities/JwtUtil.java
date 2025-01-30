@@ -8,6 +8,7 @@ import javax.crypto.SecretKey;
 
 
 import com.avanade.decolatech.fintech.models.enums.TipoUsuario;
+import com.avanade.decolatech.fintech.models.repositories.ContaRepository;
 import com.avanade.decolatech.fintech.models.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,6 +26,9 @@ public class JwtUtil {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private ContaRepository contaRepository;
 
     @Value("${app.jwt-secret}")
     private String jwtSecret;
@@ -78,10 +82,14 @@ public class JwtUtil {
                 .expiration(expireDate)
                 .signWith(key());
 
-        if(usuario.getTipoUsuario() == TipoUsuario.CLIENTE)
+        if(usuario.getTipoUsuario() == TipoUsuario.CLIENTE){
+            var conta = contaRepository.findByUsuario(usuario);
+
             return tokenBuilder
-                .claim("contaId", usuario.getContas().getFirst().getId())
-                .compact();
+                    .claim("contaId", conta.getId())
+                    .compact();
+        }
+
 
         return tokenBuilder.compact();
     }

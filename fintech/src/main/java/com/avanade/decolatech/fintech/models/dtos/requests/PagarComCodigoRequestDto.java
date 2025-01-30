@@ -1,9 +1,12 @@
 package com.avanade.decolatech.fintech.models.dtos.requests;
 
+import com.avanade.decolatech.fintech.models.enums.TipoMovimentacao;
+
 public class PagarComCodigoRequestDto {
     private String codigo;
     private double valor;
     private String descricao;
+    //private String tipoMovimentacao
 
     public PagarComCodigoRequestDto() {
     }

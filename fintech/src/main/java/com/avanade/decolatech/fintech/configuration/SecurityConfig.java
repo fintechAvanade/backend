@@ -41,15 +41,16 @@ public class SecurityConfig {
         http.sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.authorizeHttpRequests(auth ->
                 auth
-                        .requestMatchers(HttpMethod.POST,"/usuarios/login-admin").permitAll()
-                        .requestMatchers(HttpMethod.POST,"/usuarios/login-cliente").permitAll()
-                        .requestMatchers(HttpMethod.POST,"/clientes/novo").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/clientes/listar").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/clientes/{idUsuario}").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "clientes/ativar/{idUsuario}").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "clientes/desativar/{idUsuario}").hasAuthority("ADMIN")
-                        .requestMatchers("/swagger-ui/**").permitAll()
-                        .anyRequest().authenticated()
+//                        .requestMatchers(HttpMethod.POST,"/usuarios/login-admin").permitAll()
+//                        .requestMatchers(HttpMethod.POST,"/usuarios/login-cliente").permitAll()
+//                        .requestMatchers(HttpMethod.POST,"/clientes/novo").permitAll()
+//                        .requestMatchers(HttpMethod.GET, "/clientes/listar").hasAuthority("ADMIN")
+//                        .requestMatchers(HttpMethod.GET, "/clientes/{idUsuario}").hasAuthority("ADMIN")
+//                        .requestMatchers(HttpMethod.POST, "clientes/ativar/{idUsuario}").hasAuthority("ADMIN")
+//                        .requestMatchers(HttpMethod.POST, "clientes/desativar/{idUsuario}").hasAuthority("ADMIN")
+//                        .requestMatchers("/swagger-ui/**").permitAll()
+//                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
         );
 
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

@@ -3,6 +3,7 @@ package com.avanade.decolatech.fintech.models.services;
 import java.util.List;
 import java.util.Random;
 
+import com.avanade.decolatech.fintech.models.dtos.responses.ContaResponseDto;
 import com.avanade.decolatech.fintech.models.dtos.responses.ValorResponseDto;
 import com.avanade.decolatech.fintech.models.entities.Conta;
 import com.avanade.decolatech.fintech.models.entities.Usuario;
@@ -24,12 +25,12 @@ public class ContaService {
         return contaRepository.getReferenceById(idConta);
     }
 
-    public Conta buscarContaPelaAgenciaENumeroConta(String agencia, String numeroConta){
-        return contaRepository.findByAgenciaAndNumeroConta(agencia, numeroConta);
+    public ContaResponseDto buscarContaResponse(int idConta){
+        return contaRepository.buscarConta(idConta);
     }
 
-    public List<Conta> listarContas(){
-        return contaRepository.findAll();
+    public Conta buscarContaPelaAgenciaENumeroConta(String agencia, String numeroConta){
+        return contaRepository.findByAgenciaAndNumeroConta(agencia, numeroConta);
     }
 
     public List<InfoContasResponseDto> listarContasAdmin(){
@@ -39,9 +40,9 @@ public class ContaService {
     public Conta buscarContaPeloUsuario(Usuario usuario){
         var contaDb = contaRepository.findByUsuario(usuario);
 
-        if(contaDb.isEmpty()) throw new RuntimeException("Conta não encontrada");
+        if(contaDb == null) throw new RuntimeException("Conta não encontrada");
 
-        return contaDb.get();
+        return contaDb;
     }
 
     public ValorResponseDto obterSaldoAtual(int id){

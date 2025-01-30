@@ -5,16 +5,16 @@ import com.avanade.decolatech.fintech.models.enums.TipoConta;
 public class ContaResponseDto {
     private String agencia;
     private String numeroConta;
-    private TipoConta tipoConta;
+    private String tipoConta;
 
     public ContaResponseDto(
             String agencia,
             String numeroConta,
-            TipoConta tipoConta
+            String tipoConta
     ) {
-        this.agencia = agencia;
-        this.numeroConta = numeroConta;
-        this.tipoConta = tipoConta;
+        this.setAgencia(agencia);
+        this.setNumeroConta(numeroConta);
+        this.setTipoConta(tipoConta);
     }
 
     public String getAgencia() {
@@ -33,11 +33,11 @@ public class ContaResponseDto {
         this.numeroConta = numeroConta;
     }
 
-    public TipoConta getTipoConta() {
+    public String getTipoConta() {
         return tipoConta;
     }
 
-    public void setTipoConta(TipoConta tipoConta) {
+    public void setTipoConta(String tipoConta) {
         this.tipoConta = tipoConta;
     }
 }
