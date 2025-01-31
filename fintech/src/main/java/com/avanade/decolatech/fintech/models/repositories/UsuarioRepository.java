@@ -50,5 +50,5 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     EditarClienteResponseDto buscarUsuarioEnderecoPorId(@Param("idUsuario") int idUsuario);
 
 
-    Optional<Usuario> findByNomeUsuario(String username);
+    Usuario findByNomeUsuario(String username);
 }

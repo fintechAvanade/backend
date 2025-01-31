@@ -39,6 +39,10 @@ public class UsuarioService implements UserDetailsService {
         return usuarioRepository.buscarUsuarioEnderecoPorId(idUsuario);
     }
 
+    public Usuario buscarUsuarioPeloNomeDeUsuario(String nomeUsuario){
+        return usuarioRepository.findByNomeUsuario(nomeUsuario);
+    }
+
     public void atualizarDataAcesso(String nomeUsuario){
         var usuario = usuarioRepository.getUserByUsername(nomeUsuario);
 
@@ -62,7 +66,7 @@ public class UsuarioService implements UserDetailsService {
 
     public boolean usuarioExiste(String nomeUsuario){
         var usuario =  usuarioRepository.findByNomeUsuario(nomeUsuario);
-        return usuario.isPresent();
+        return usuario != null;
     }
 
     public Usuario salvarUsuario(Usuario usuario){

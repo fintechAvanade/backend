@@ -1,11 +1,13 @@
 package com.avanade.decolatech.fintech.models.services;
 
+import com.avanade.decolatech.fintech.models.enums.TipoUsuario;
 import com.avanade.decolatech.fintech.utilities.JwtUtil;
 import com.avanade.decolatech.fintech.models.dtos.requests.LoginAdminRequestDto;
 import com.avanade.decolatech.fintech.models.dtos.requests.LoginClienteRequestDto;
 import com.avanade.decolatech.fintech.models.repositories.ContaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,6 +29,10 @@ public class AuthService {
 
     public String login(LoginAdminRequestDto request) {
 
+        var usuario = usuarioService.buscarUsuarioPeloNomeDeUsuario(request.getUsuario());
+
+        if(usuario.getTipoUsuario().equals(TipoUsuario.CLIENTE)) throw new BadCredentialsException("Apenas usuários administradores podem logar por esta página");
+
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 request.getUsuario(),
                 request.getSenha()
@@ -35,6 +41,7 @@ public class AuthService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         usuarioService.atualizarDataAcesso(request.getUsuario());
+
 
         String token = jwtUtil.generateToken(authentication);
 
