@@ -1,6 +1,7 @@
 package com.avanade.decolatech.fintech.controllers;
 
 import com.avanade.decolatech.fintech.models.dtos.requests.PagarComCodigoRequestDto;
+import com.avanade.decolatech.fintech.models.dtos.requests.PixRequestDto;
 import com.avanade.decolatech.fintech.models.dtos.requests.TransferirRequestDto;
 import com.avanade.decolatech.fintech.models.dtos.requests.ValorRequestDto;
 import com.avanade.decolatech.fintech.models.dtos.responses.MovimentacoesResponseDto;
@@ -54,4 +55,10 @@ public class MovimentacaoController {
     public ResponseEntity<ValorResponseDto> pagarComCodigo(@PathVariable("idConta") int idConta, @RequestBody PagarComCodigoRequestDto request){
         return new ResponseEntity<ValorResponseDto>(movimentacaoService.pagarComCodigo(idConta, request), HttpStatus.OK);
     }
+
+    @PostMapping("/pix/{idConta}")
+    public ResponseEntity<ValorResponseDto> realizarPix(@PathVariable("idConta") int idConta, @RequestBody PixRequestDto request){
+        return new ResponseEntity<ValorResponseDto>(movimentacaoService.pix(idConta, request), HttpStatus.OK);
+    }
+
 }

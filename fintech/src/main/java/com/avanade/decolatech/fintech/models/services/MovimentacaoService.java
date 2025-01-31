@@ -1,6 +1,7 @@
 package com.avanade.decolatech.fintech.models.services;
 
 import com.avanade.decolatech.fintech.models.dtos.requests.PagarComCodigoRequestDto;
+import com.avanade.decolatech.fintech.models.dtos.requests.PixRequestDto;
 import com.avanade.decolatech.fintech.models.dtos.requests.TransferirRequestDto;
 import com.avanade.decolatech.fintech.models.dtos.requests.ValorRequestDto;
 import com.avanade.decolatech.fintech.models.dtos.responses.MovimentacoesResponseDto;
@@ -28,6 +29,8 @@ public class MovimentacaoService {
 
     @Autowired
     private ContaService contaService;
+
+    @Autowired ChavePixService chavePixService;
 
     public List<Movimentacao> listarMovimentacoes() {
         return movimentacaoRepository.findAll();
@@ -183,7 +186,7 @@ public class MovimentacaoService {
                 codigoMovimentacao,
                 StatusMovimentacao.PENDENTE,
                 conta,
-                TipoMovimentacao.PAGAMENTO_BOLETO,
+                TipoMovimentacao.valueOf(request.getTipoMovimentacao()),
                 Direcao.CREDITO,
                 data,
                 request.getDescricao(),
@@ -204,4 +207,60 @@ public class MovimentacaoService {
         return new ValorResponseDto(valorTotal);
     }
 
+
+    public ValorResponseDto pix(int idConta, PixRequestDto request) {
+        if(request.getValor()<=0) throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
+
+        var origem = contaService.buscarContaPeloId(idConta);
+
+        if(origem.getSaldo() < request.getValor()) throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
+
+        var destino = chavePixService.buscarChavePix(request.getChave()).getConta();
+
+        var codigoMovimentacao = String.valueOf(UUID.randomUUID());
+        var data = Date.from(Instant.now());
+        var taxa = 0;
+        var valorTotal = request.getValor()+(request.getValor() * taxa);
+
+        var movimentacaoOrigem = new Movimentacao(
+                codigoMovimentacao,
+                StatusMovimentacao.PENDENTE,
+                origem,
+                TipoMovimentacao.PIX,
+                Direcao.CREDITO,
+                data,
+                request.getDescricao(),
+                request.getValor(),
+                taxa,
+                valorTotal);
+
+        var movimentacaoDestino = new Movimentacao(
+                codigoMovimentacao,
+                StatusMovimentacao.PENDENTE,
+                destino,
+                TipoMovimentacao.PIX,
+                Direcao.DEBITO,
+                data,
+                request.getDescricao(),
+                request.getValor(),
+                taxa,
+                valorTotal);
+
+        var movimentacaoOrigemDb = this.salvarMovimentacao(movimentacaoOrigem);
+        var movimentacaoDestinoDb = this.salvarMovimentacao(movimentacaoDestino);
+
+        origem.setSaldo(origem.getSaldo()-valorTotal);
+        destino.setSaldo(destino.getSaldo()+valorTotal);
+
+        contaService.salvarConta(origem);
+        contaService.salvarConta(destino);
+
+        movimentacaoOrigemDb.setStatus(StatusMovimentacao.SUCESSO);
+        movimentacaoDestinoDb.setStatus(StatusMovimentacao.SUCESSO);
+
+        this.salvarMovimentacao(movimentacaoOrigem);
+        this.salvarMovimentacao(movimentacaoDestino);
+
+        return new ValorResponseDto(valorTotal);
+    }
 }

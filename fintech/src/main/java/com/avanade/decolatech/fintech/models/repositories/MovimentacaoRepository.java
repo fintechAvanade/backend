@@ -9,7 +9,11 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface MovimentacaoRepository extends JpaRepository<Movimentacao, Integer> {
-    @Query(value = "SELECT M.TIPO_MOVIMENTACAO, M.DATA_HORA, M.VALOR_MOVIMENTACAO, M.DIRECAO FROM TB_MOVIMENTACAO M WHERE M.ID_CONTA = :idConta",
+    @Query(value = """
+            SELECT M.TIPO_MOVIMENTACAO, M.DATA_HORA, M.VALOR_MOVIMENTACAO, M.DIRECAO 
+            FROM TB_MOVIMENTACAO M WHERE M.ID_CONTA = :idConta
+            ORDER BY M.DATA_HORA DESC
+            """,
             nativeQuery = true)
     List<MovimentacoesResponseDto> listarMovimentacoesPorIdConta(@Param("idConta") int idConta);
 
@@ -18,6 +22,7 @@ public interface MovimentacaoRepository extends JpaRepository<Movimentacao, Inte
             SELECT M.TIPO_MOVIMENTACAO, M.DATA_HORA, M.VALOR_MOVIMENTACAO, M.DIRECAO
             FROM TB_MOVIMENTACAO M
             WHERE M.DIRECAO = 'CREDITO' AND M.ID_CONTA = :idConta
+            ORDER BY M.DATA_HORA DESC
             """, nativeQuery = true
     )
     List<MovimentacoesResponseDto> listarMovimentacoesCreditadasPorIdConta(@Param("idConta") int idConta);
@@ -27,6 +32,7 @@ public interface MovimentacaoRepository extends JpaRepository<Movimentacao, Inte
             SELECT M.TIPO_MOVIMENTACAO, M.DATA_HORA, M.VALOR_MOVIMENTACAO, M.DIRECAO
             FROM TB_MOVIMENTACAO M
             WHERE M.DIRECAO = 'DEBITO' AND M.ID_CONTA = :idConta
+            ORDER BY M.DATA_HORA DESC
             """, nativeQuery = true
     )
     List<MovimentacoesResponseDto> listarMovimentacoesDebitadasPorIdConta(@Param("idConta") int idConta);

@@ -6,15 +6,16 @@ public class PagarComCodigoRequestDto {
     private String codigo;
     private double valor;
     private String descricao;
-    //private String tipoMovimentacao
+    private String tipoMovimentacao;
 
     public PagarComCodigoRequestDto() {
     }
 
-    public PagarComCodigoRequestDto(String codigo, double valor, String descricao) {
+    public PagarComCodigoRequestDto(String codigo, double valor, String descricao, String tipoMovimentacao) {
         this.setCodigo(codigo);
         this.setValor(valor);
         this.setDescricao(descricao);
+        this.setTipoMovimentacao(tipoMovimentacao);
     }
 
     public String getCodigo() {
@@ -39,5 +40,13 @@ public class PagarComCodigoRequestDto {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public String getTipoMovimentacao() {
+        return tipoMovimentacao;
+    }
+
+    public void setTipoMovimentacao(String tipoMovimentacao) {
+        this.tipoMovimentacao = tipoMovimentacao;
     }
 }

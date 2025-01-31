@@ -23,4 +23,6 @@ public interface ChavePixRepository extends JpaRepository<ChavePix, Integer> {
             WHERE ATIVO = 1 AND ID_CONTA = :idConta
             """, nativeQuery = true)
     List<ChavePixResponseDto> buscarChavePixPelaidConta(@Param("idConta") int idConta);
+
+    ChavePix findByValorChavePix(String codigo);
 }

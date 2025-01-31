@@ -26,6 +26,17 @@ public class ChavePix {
 	@Column(name = "ATIVO")
 	private boolean ativo;
 
+
+	public ChavePix() {
+	}
+
+	public ChavePix(Conta conta, TipoChavePix tipoChavePix, String valorChavePix, boolean ativo) {
+		this.conta = conta;
+		this.tipoChavePix = tipoChavePix;
+		this.valorChavePix = valorChavePix;
+		this.ativo = ativo;
+	}
+
 	public int getId() {
 		return id;
 	}
