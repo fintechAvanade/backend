@@ -68,9 +68,9 @@ public interface ContaRepository extends JpaRepository<Conta, Integer> {
     @Query(value = "SELECT C.SALDO AS [valor] FROM TB_CONTA C WHERE C.ID = :id", nativeQuery = true)
     ValorResponseDto obterSaldo(@Param("id") int id);
 
-    @Query(value = "SELECT ISNULL(SUM(VALOR_MOVIMENTACAO), 0) AS [valor] FROM TB_MOVIMENTACAO M WHERE M.DIRECAO = 'D' AND M.ID_CONTA = :id", nativeQuery = true)
+    @Query(value = "SELECT ISNULL(SUM(VALOR_MOVIMENTACAO), 0) AS [valor] FROM TB_MOVIMENTACAO M WHERE M.DIRECAO = 'DEBITO' AND M.ID_CONTA = :id", nativeQuery = true)
     ValorResponseDto obterEntradas(@Param("id") int id);
 
-    @Query(value = "SELECT ISNULL(SUM(VALOR_MOVIMENTACAO), 0) AS [valor] FROM TB_MOVIMENTACAO M WHERE M.DIRECAO = 'C' AND M.ID_CONTA = :id", nativeQuery = true)
+    @Query(value = "SELECT ISNULL(SUM(VALOR_MOVIMENTACAO), 0) AS [valor] FROM TB_MOVIMENTACAO M WHERE M.DIRECAO = 'CREDITO' AND M.ID_CONTA = :id", nativeQuery = true)
     ValorResponseDto obterSaidas(@Param("id") int id);
 }

@@ -31,6 +31,6 @@ public class ContaController {
 
     @GetMapping("{id}/saidas")
     public ResponseEntity<ValorResponseDto> obterSaidas(@PathVariable("id") int idConta){
-        return new ResponseEntity<ValorResponseDto>(contaService.obterEntradas(idConta), HttpStatus.OK);
+        return new ResponseEntity<ValorResponseDto>(contaService.obterSaidas(idConta), HttpStatus.OK);
     }
 }

@@ -48,6 +48,7 @@ public class MovimentacaoService {
         return movimentacaoRepository.listarMovimentacoesDebitadasPorIdConta(idConta);
     }
 
+    @Transactional
     public Movimentacao salvarMovimentacao(Movimentacao movimentacao) {
         return movimentacaoRepository.save(movimentacao);
     }
@@ -91,6 +92,8 @@ public class MovimentacaoService {
 
         conta.setSaldo(conta.getSaldo()+request.getValor());
 
+        //Spring boot validator
+        //Hibernate validator
         var movimentacao = new Movimentacao();
         movimentacao.setConta(conta);
         movimentacao.setCodigoMovimentacao(String.valueOf(UUID.randomUUID()));
@@ -208,6 +211,7 @@ public class MovimentacaoService {
     }
 
 
+    @Transactional
     public ValorResponseDto pix(int idConta, PixRequestDto request) {
         if(request.getValor()<=0) throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
 
@@ -263,4 +267,5 @@ public class MovimentacaoService {
 
         return new ValorResponseDto(valorTotal);
     }
+
 }
