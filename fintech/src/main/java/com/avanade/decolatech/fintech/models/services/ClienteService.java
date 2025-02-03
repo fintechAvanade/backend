@@ -58,11 +58,9 @@ public class ClienteService {
     }
 
     @Transactional
-    public String editarCliente(int idConta, EditarClienteRequestDto request) {
+    public String editarCliente(int idUsuario, EditarClienteRequestDto request) {
 
-        var contaDb = contaService.buscarContaPeloId(idConta);
-
-        var usuarioDb = contaDb.getUsuario();
+        var usuarioDb = usuarioService.buscarUsuarioPorId(idUsuario);
 
         if(usuarioDb == null || !usuarioDb.isAtivo()) throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
 
@@ -70,16 +68,18 @@ public class ClienteService {
 
         var usuario = usuarioService.editarUsuario(request, usuarioDb, endereco);
 
-        contaDb.setTipoConta(TipoConta.valueOf(request.getTipoConta()));
-        contaService.salvarConta(contaDb);
+        var conta = contaService.buscarContaPeloUsuario(usuario);
+
+        conta.setTipoConta(TipoConta.valueOf(request.getTipoConta()));
+        contaService.salvarConta(conta);
 
         return "Cliente editado com sucesso";
     }
 
     @Transactional
-    public String alterarEstadoCliente(int idConta, boolean estado) {
-        var conta = contaService.buscarContaPeloId(idConta);
-        var usuario = conta.getUsuario();
+    public String alterarEstadoCliente(int idUsuario, boolean estado) {
+        var usuario = usuarioService.buscarUsuarioPorId(idUsuario);
+        var conta = contaService.buscarContaPeloUsuario(usuario);
         var chavesPix = chavePixService.buscarTodasChavesPixPelaConta(conta);
         var cartoes = cartaoService.buscarCartaoPelaConta(conta);
 

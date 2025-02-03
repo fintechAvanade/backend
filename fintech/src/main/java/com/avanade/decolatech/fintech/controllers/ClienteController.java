@@ -56,23 +56,23 @@ public class ClienteController {
         }
     }
 
-    @PutMapping("/editar/{idConta}")
-    public ResponseEntity<MensagemResponseDto> editarCliente(@PathVariable("idConta") int idConta, @RequestBody EditarClienteRequestDto request){
-        var response = service.editarCliente(idConta, request);
+    @PutMapping("/editar/{idUsuario}")
+    public ResponseEntity<MensagemResponseDto> editarCliente(@PathVariable("idUsuario") int idUsuario, @RequestBody EditarClienteRequestDto request){
+        var response = service.editarCliente(idUsuario, request);
         var mensagem = new MensagemResponseDto(response);
         return new ResponseEntity<MensagemResponseDto>(mensagem, HttpStatus.ACCEPTED);
     }
 
-    @PutMapping("/desativar/{idConta}")
-    public ResponseEntity<MensagemResponseDto> desativarCliente(@PathVariable("idConta") int idConta){
-        var response = service.alterarEstadoCliente(idConta, false);
+    @PutMapping("/desativar/{idUsuario}")
+    public ResponseEntity<MensagemResponseDto> desativarCliente(@PathVariable("idUsuario") int idUsuario){
+        var response = service.alterarEstadoCliente(idUsuario, false);
         var mensagem = new MensagemResponseDto(response);
         return new ResponseEntity<MensagemResponseDto>(mensagem, HttpStatus.ACCEPTED);
     }
 
-    @PutMapping("/ativar/{idConta}")
-    public ResponseEntity<MensagemResponseDto> ativarCliente(@PathVariable("idConta") int idConta){
-        var response = service.alterarEstadoCliente(idConta, true);
+    @PutMapping("/ativar/{idUsuario}")
+    public ResponseEntity<MensagemResponseDto> ativarCliente(@PathVariable("idUsuario") int idUsuario){
+        var response = service.alterarEstadoCliente(idUsuario, true);
         var mensagem = new MensagemResponseDto(response);
         return new ResponseEntity<MensagemResponseDto>(mensagem, HttpStatus.ACCEPTED);
     }
