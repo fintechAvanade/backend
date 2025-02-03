@@ -13,6 +13,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.util.Date;
+
 @Service
 public class AuthService {
     @Autowired
@@ -59,6 +62,10 @@ public class AuthService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String token = jwtUtil.generateToken(authentication);
+
+        conta.getUsuario().setDataUltimoAcesso(Date.from(Instant.now()));
+
+        usuarioService.salvarUsuario(conta.getUsuario());
 
         return token;
     }
