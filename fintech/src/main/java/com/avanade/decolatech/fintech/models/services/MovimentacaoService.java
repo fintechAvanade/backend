@@ -189,7 +189,7 @@ public class MovimentacaoService {
                 codigoMovimentacao,
                 StatusMovimentacao.PENDENTE,
                 conta,
-                TipoMovimentacao.valueOf(request.getTipoMovimentacao()),
+                TipoMovimentacao.valueOf(request.getTipoMovimentacao().toUpperCase()),
                 Direcao.CREDITO,
                 data,
                 request.getDescricao(),

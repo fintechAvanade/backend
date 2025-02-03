@@ -72,6 +72,24 @@ public class ChavePixService {
 				throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
+		var chavesCadastradas = buscarTodasChavesPixPelaConta(conta);
+
+		for (int i = 0; i < chavesCadastradas.size(); i++) {
+			if(chavesCadastradas.get(i).getValorChavePix().equals(valor)){
+				if (!chavesCadastradas.get(i).isAtivo()){
+					var chaveAtiva = chavesCadastradas.get(i);
+					chaveAtiva.setAtivo(true);
+					chavePixRepository.save(chaveAtiva);
+				}
+
+				return new ChavePixResponseDto(
+						chavesCadastradas.get(i).getId(),
+						chavesCadastradas.get(i).getTipoChavePix().toString(),
+						chavesCadastradas.get(i).getValorChavePix());
+			}
+
+		}
+
 		var chavePix = chavePixRepository.save(new ChavePix(conta, tipoChave, valor, true));
 
 		return new ChavePixResponseDto(chavePix.getId(), chavePix.getTipoChavePix().toString(), chavePix.getValorChavePix());
