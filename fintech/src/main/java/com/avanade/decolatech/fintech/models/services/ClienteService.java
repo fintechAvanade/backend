@@ -58,27 +58,28 @@ public class ClienteService {
     }
 
     @Transactional
-    public String editarCliente(int idUsuario, EditarClienteRequestDto request) {
+    public String editarCliente(int idConta, EditarClienteRequestDto request) {
 
-        var usuarioDb = usuarioService.buscarUsuarioPorId(idUsuario);
+        var contaDb = contaService.buscarContaPeloId(idConta);
 
-        if(usuarioDb==null || !usuarioDb.isAtivo()) throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
+        var usuarioDb = contaDb.getUsuario();
+
+        if(usuarioDb == null || !usuarioDb.isAtivo()) throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
 
         var endereco = enderecoService.editarEndereco(request, usuarioDb.getEndereco());
 
         var usuario = usuarioService.editarUsuario(request, usuarioDb, endereco);
 
-        var conta = contaService.buscarContaPeloUsuario(usuario);
-        conta.setTipoConta(TipoConta.valueOf(request.getTipoConta()));
-        contaService.salvarConta(conta);
+        contaDb.setTipoConta(TipoConta.valueOf(request.getTipoConta()));
+        contaService.salvarConta(contaDb);
 
         return "Cliente editado com sucesso";
     }
 
     @Transactional
-    public String alterarEstadoCliente(int idUsuario, boolean estado) {
-        var usuario = usuarioService.buscarUsuarioPorId(idUsuario);
-        var conta = contaService.buscarContaPeloUsuario(usuario);
+    public String alterarEstadoCliente(int idConta, boolean estado) {
+        var conta = contaService.buscarContaPeloId(idConta);
+        var usuario = conta.getUsuario();
         var chavesPix = chavePixService.buscarTodasChavesPixPelaConta(conta);
         var cartoes = cartaoService.buscarCartaoPelaConta(conta);
 
