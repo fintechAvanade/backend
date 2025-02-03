@@ -47,9 +47,9 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
            FROM TB_USUARIO U
            INNER JOIN TB_ENDERECO E ON U.ID_ENDERECO = E.ID
            INNER JOIN TB_CONTA C ON U.ID = C.ID_USUARIO
-           WHERE C.ID = :idConta
+           WHERE U.ID = :idUsuario
            """, nativeQuery = true)
-    EditarClienteResponseDto buscarUsuarioEnderecoPorId(@Param("idConta") int idConta);
+    EditarClienteResponseDto buscarUsuarioEnderecoPorId(@Param("idUsuario") int idUsuario);
 
 
     Usuario findByNomeUsuario(String username);

@@ -37,8 +37,8 @@ public class ClienteService {
         return contaService.listarContasAdmin();
     }
 
-    public EditarClienteResponseDto buscarClientePorIdConta(int idConta){
-        return usuarioService.buscarUsuarioEnderecoPorId(idConta);
+    public EditarClienteResponseDto buscarClientePorId(int idUsuario){
+        return usuarioService.buscarUsuarioEnderecoPorId(idUsuario);
     }
 
     @Transactional

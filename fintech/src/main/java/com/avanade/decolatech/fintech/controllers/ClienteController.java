@@ -31,9 +31,9 @@ public class ClienteController {
     }
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    @GetMapping("/{idConta}")
-    public ResponseEntity<EditarClienteResponseDto> buscarCliente(@PathVariable("idConta") int idConta){
-        return new ResponseEntity<EditarClienteResponseDto>(service.buscarClientePorIdConta(idConta), HttpStatus.OK);
+    @GetMapping("/{idUsuario}")
+    public ResponseEntity<EditarClienteResponseDto> buscarCliente(@PathVariable("idUsuario") int idUsuario){
+        return new ResponseEntity<EditarClienteResponseDto>(service.buscarClientePorId(idUsuario), HttpStatus.OK);
     }
 
     @PostMapping("/novo")
