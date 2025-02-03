@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import com.avanade.decolatech.fintech.models.dtos.requests.CriarChavePixRequestDto;
 import com.avanade.decolatech.fintech.models.dtos.responses.ChavePixResponseDto;
+import com.avanade.decolatech.fintech.models.dtos.responses.InfoChavesPixResponseDto;
 import com.avanade.decolatech.fintech.models.entities.Conta;
 import com.avanade.decolatech.fintech.models.enums.TipoChavePix;
 import org.apache.commons.lang3.NotImplementedException;
@@ -24,6 +25,15 @@ public class ChavePixService {
 
 	@Autowired
 	private ContaService contaService;
+
+	public InfoChavesPixResponseDto buscarInformacoesParaCadastro(int idConta) {
+		var conta = contaService.buscarContaPeloId(idConta);
+		return new InfoChavesPixResponseDto(
+				conta.getUsuario().getCpf(),
+				conta.getUsuario().getTelefone(),
+				conta.getUsuario().getEmail()
+		);
+	}
 
 	public List<ChavePix> buscarTodasChavesPixPelaConta(Conta conta){
 		return chavePixRepository.findAllByConta(conta);
