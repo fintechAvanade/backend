@@ -28,7 +28,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
    @Query(value = """
            SELECT
-               U.ID AS id,
+               c.ID AS idConta,
+               U.ID AS idUsuario,
                U.NOME AS nome,
                U.USUARIO AS nomeUsuario,
                U.CPF AS cpf,
@@ -45,9 +46,10 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
                U.ATIVO AS ativo
            FROM TB_USUARIO U
            INNER JOIN TB_ENDERECO E ON U.ID_ENDERECO = E.ID
-           WHERE U.ID = :idUsuario
+           INNER JOIN TB_CONTA C ON U.ID = C.ID_USUARIO
+           WHERE C.ID = :idConta
            """, nativeQuery = true)
-    EditarClienteResponseDto buscarUsuarioEnderecoPorId(@Param("idUsuario") int idUsuario);
+    EditarClienteResponseDto buscarUsuarioEnderecoPorId(@Param("idConta") int idConta);
 
 
     Usuario findByNomeUsuario(String username);

@@ -3,7 +3,8 @@ package com.avanade.decolatech.fintech.models.dtos.responses;
 import java.util.Date;
 
 public class EditarClienteResponseDto {
-    private int id;
+    private int idConta;
+    private int idUsuario;
     private String nome;
     private String nomeUsuario;
     private String cpf;
@@ -23,7 +24,8 @@ public class EditarClienteResponseDto {
     }
 
     public EditarClienteResponseDto(
-            int id,
+            int idConta,
+            int idUsuario,
             String nome,
             String nomeUsuario,
             String cpf,
@@ -39,7 +41,8 @@ public class EditarClienteResponseDto {
             String complemento,
             boolean ativo
     ) {
-        this.setId(id);
+        this.setIdConta(idConta);
+        this.setIdUsuario(idUsuario);
         this.setNome(nome);
         this.setNomeUsuario(nomeUsuario);
         this.setCpf(cpf);
@@ -57,12 +60,20 @@ public class EditarClienteResponseDto {
         this.setAtivo(ativo);
     }
 
-    public int getId() {
-        return id;
+    public int getIdConta() {
+        return idConta;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdConta(int idConta) {
+        this.idConta = idConta;
+    }
+
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public String getNome() {
