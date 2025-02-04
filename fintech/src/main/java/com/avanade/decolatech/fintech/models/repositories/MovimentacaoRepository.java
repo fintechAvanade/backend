@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface MovimentacaoRepository extends JpaRepository<Movimentacao, Integer> {
     @Query(value = """
-            SELECT M.TIPO_MOVIMENTACAO, M.DATA_HORA, M.VALOR_MOVIMENTACAO, M.DIRECAO 
+            SELECT M.TIPO_MOVIMENTACAO, M.DATA_HORA, M.VALOR_TOTAL, M.DIRECAO 
             FROM TB_MOVIMENTACAO M WHERE M.ID_CONTA = :idConta
             ORDER BY M.DATA_HORA DESC
             """,
@@ -19,7 +19,7 @@ public interface MovimentacaoRepository extends JpaRepository<Movimentacao, Inte
 
     @Query(
             value ="""
-            SELECT M.TIPO_MOVIMENTACAO, M.DATA_HORA, M.VALOR_MOVIMENTACAO, M.DIRECAO
+            SELECT M.TIPO_MOVIMENTACAO, M.DATA_HORA, M.VALOR_TOTAL, M.DIRECAO
             FROM TB_MOVIMENTACAO M
             WHERE M.DIRECAO = 'CREDITO' AND M.ID_CONTA = :idConta
             ORDER BY M.DATA_HORA DESC
@@ -29,7 +29,7 @@ public interface MovimentacaoRepository extends JpaRepository<Movimentacao, Inte
 
     @Query(
             value = """
-            SELECT M.TIPO_MOVIMENTACAO, M.DATA_HORA, M.VALOR_MOVIMENTACAO, M.DIRECAO
+            SELECT M.TIPO_MOVIMENTACAO, M.DATA_HORA, M.VALOR_TOTAL, M.DIRECAO
             FROM TB_MOVIMENTACAO M
             WHERE M.DIRECAO = 'DEBITO' AND M.ID_CONTA = :idConta
             ORDER BY M.DATA_HORA DESC

@@ -9,6 +9,7 @@ import com.avanade.decolatech.fintech.models.dtos.responses.ValorResponseDto;
 import com.avanade.decolatech.fintech.models.entities.Movimentacao;
 import com.avanade.decolatech.fintech.models.enums.Direcao;
 import com.avanade.decolatech.fintech.models.enums.StatusMovimentacao;
+import com.avanade.decolatech.fintech.models.enums.TipoConta;
 import com.avanade.decolatech.fintech.models.enums.TipoMovimentacao;
 import com.avanade.decolatech.fintech.models.repositories.MovimentacaoRepository;
 import jakarta.transaction.Transactional;
@@ -126,8 +127,11 @@ public class MovimentacaoService {
         if(destino==null || !destino.isAtivo()) throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
 
         var codigoMovimentacao = String.valueOf(UUID.randomUUID());
+
         var data = Date.from(Instant.now());
-        var taxa = 0.02;
+
+        double taxa = origem.getTipoConta().equals(TipoConta.SIMPLES) ? 0.02 : 0;
+
         var valorTotal = request.getValor()+(request.getValor() * taxa);
 
         var movimentacaoOrigem = new Movimentacao(
@@ -158,7 +162,7 @@ public class MovimentacaoService {
         var movimentacaoDestinoDb = this.salvarMovimentacao(movimentacaoDestino);
 
         origem.setSaldo(origem.getSaldo()-valorTotal);
-        destino.setSaldo(destino.getSaldo()+valorTotal);
+        destino.setSaldo(destino.getSaldo()+ request.getValor());
 
         contaService.salvarConta(origem);
         contaService.salvarConta(destino);
