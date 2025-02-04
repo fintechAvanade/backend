@@ -28,7 +28,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
    @Query(value = """
            SELECT
-               c.ID AS idConta,
+               C.ID AS idConta,
                U.ID AS idUsuario,
                U.NOME AS nome,
                U.USUARIO AS nomeUsuario,
@@ -43,7 +43,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
                E.ESTADO AS estado,
                E.NUMERO AS numero,
                E.COMPLEMENTO AS complemento,
-               U.ATIVO AS ativo
+               U.ATIVO AS ativo,
+               C.TIPO_CONTA AS tipoConta
            FROM TB_USUARIO U
            INNER JOIN TB_ENDERECO E ON U.ID_ENDERECO = E.ID
            INNER JOIN TB_CONTA C ON U.ID = C.ID_USUARIO

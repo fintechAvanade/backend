@@ -8,7 +8,6 @@ import com.avanade.decolatech.fintech.models.dtos.responses.ChavePixResponseDto;
 import com.avanade.decolatech.fintech.models.dtos.responses.InfoChavesPixResponseDto;
 import com.avanade.decolatech.fintech.models.entities.Conta;
 import com.avanade.decolatech.fintech.models.enums.TipoChavePix;
-import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -75,7 +74,7 @@ public class ChavePixService {
 		var chavesCadastradas = buscarTodasChavesPixPelaConta(conta);
 
 		for (int i = 0; i < chavesCadastradas.size(); i++) {
-			if(chavesCadastradas.get(i).getValorChavePix().equals(valor)){
+			if(chavesCadastradas.get(i).getTipoChavePix().equals(tipoChave)){
 				if (!chavesCadastradas.get(i).isAtivo()){
 					var chaveAtiva = chavesCadastradas.get(i);
 					chaveAtiva.setAtivo(true);

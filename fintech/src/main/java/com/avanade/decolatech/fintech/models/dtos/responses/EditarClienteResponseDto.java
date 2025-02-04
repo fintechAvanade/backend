@@ -19,6 +19,7 @@ public class EditarClienteResponseDto {
     private int numero;
     private String complemento;
     private boolean ativo;
+    private String tipoConta;
 
     public EditarClienteResponseDto() {
     }
@@ -39,7 +40,8 @@ public class EditarClienteResponseDto {
             String estado,
             int numero,
             String complemento,
-            boolean ativo
+            boolean ativo,
+            String tipoConta
     ) {
         this.setIdConta(idConta);
         this.setIdUsuario(idUsuario);
@@ -58,6 +60,7 @@ public class EditarClienteResponseDto {
         this.setNumero(numero);
         this.setComplemento(complemento);
         this.setAtivo(ativo);
+        this.setTipoConta(tipoConta);
     }
 
     public int getIdConta() {
@@ -186,5 +189,13 @@ public class EditarClienteResponseDto {
 
     public void setAtivo(boolean ativo) {
         this.ativo = ativo;
+    }
+
+    public String getTipoConta() {
+        return tipoConta;
+    }
+
+    public void setTipoConta(String tipoConta) {
+        this.tipoConta = tipoConta;
     }
 }

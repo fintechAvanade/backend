@@ -8,7 +8,6 @@ public class EditarClienteRequestDto {
     private String email;
     private String telefone;
     private String nomeUsuario;
-    private String senha;
     private String cep;
     private String cidade;
     private String bairro;
@@ -21,13 +20,12 @@ public class EditarClienteRequestDto {
     public EditarClienteRequestDto() {
     }
 
-    public EditarClienteRequestDto(String nome, Date dataNascimento, String email, String telefone, String nomeUsuario, String senha, String cep, String cidade, String bairro, String logradouro, String estado, int numero, String complemento, String tipoConta) {
+    public EditarClienteRequestDto(String nome, Date dataNascimento, String email, String telefone, String nomeUsuario, String cep, String cidade, String bairro, String logradouro, String estado, int numero, String complemento, String tipoConta) {
         this.setNome(nome);
         this.setDataNascimento(dataNascimento);
         this.setEmail(email);
         this.setTelefone(telefone);
         this.setNomeUsuario(nomeUsuario);
-        this.setSenha(senha);
         this.setCep(cep);
         this.setCidade(cidade);
         this.setBairro(bairro);
@@ -76,14 +74,6 @@ public class EditarClienteRequestDto {
 
     public void setNomeUsuario(String nomeUsuario) {
         this.nomeUsuario = nomeUsuario;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
     }
 
     public String getCep() {

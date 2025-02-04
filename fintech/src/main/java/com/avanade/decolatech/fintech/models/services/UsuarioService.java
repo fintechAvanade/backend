@@ -95,16 +95,12 @@ public class UsuarioService implements UserDetailsService {
     }
 
     public Usuario editarUsuario(EditarClienteRequestDto request, Usuario usuario, Endereco endereco){
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String senha = passwordEncoder.encode(request.getSenha());
-
         usuario.setNome(request.getNome());
         usuario.setDataNascimento(request.getDataNascimento());
         usuario.setEmail(request.getEmail());
         usuario.setTelefone(request.getTelefone());
         usuario.setNomeUsuario(request.getNomeUsuario());
         usuario.setEndereco(endereco);
-        usuario.setHashSenha(senha);
 
         return salvarUsuario(usuario);
     }
