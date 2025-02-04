@@ -156,7 +156,7 @@ public class MovimentacaoService {
                 request.getDescricao(),
                 request.getValor(),
                 taxa,
-                valorTotal);
+                request.getValor());
 
         var movimentacaoOrigemDb = this.salvarMovimentacao(movimentacaoOrigem);
         var movimentacaoDestinoDb = this.salvarMovimentacao(movimentacaoDestino);
